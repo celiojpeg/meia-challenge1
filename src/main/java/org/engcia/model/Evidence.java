@@ -1,6 +1,10 @@
 package org.engcia.model;
 
 public class Evidence extends Fact{
+    public static final String PRECO_PRIORITARIO = "O preço é o fator prioritário em relação ao consume e design";
+    public static final String CONSUMO_PRIORITARIO = "O consumo é o fator prioritário em relação ao design";
+
+
     public static final String BLOOD_EAR = "There is blood in the ear";
     public static final String EARACHE = "Do you have earache";
     public static final String DEAFNESS = "Do you have deafness";
