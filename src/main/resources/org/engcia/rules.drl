@@ -14,14 +14,13 @@
 */
 
 package org.engcia;
-// package must be defined in packages from kmodule.xml file
 
-//list any import classes here.
-import org.engcia.model.Evidences;
+import org.engcia.model.Evidence;
 import org.engcia.model.Hypothesis;
 import org.engcia.model.Conclusion;
+import org.engcia.model.Fact;
 
-//declare any global variables here
+import function org.engcia.view.UI.answer;
 
 query "Conclusions"
 	$conclusion : Conclusion()
@@ -29,24 +28,24 @@ end
 
 rule "r1"
 	when
-		Evidences(bloodEar == "yes" )
+		eval(answer(Evidence.BLOOD_EAR, "yes" ))
 	then
-		Hypothesis h = new Hypothesis("upper type");
+		Hypothesis h = new Hypothesis("haemorrhage", "upper type");
 		insert(h);
 end
 
 rule "r2"
 	when
-		Evidences(bloodEar == "no" )
+		eval(answer(Evidence.BLOOD_EAR, "no" ))
 	then
-		Hypothesis h = new Hypothesis("lower type");
+		Hypothesis h = new Hypothesis("haemorrhage", "lower type");
 		insert(h);
 end
 
 rule "r3"
 	when
-		Hypothesis( description == "upper type")
-		Evidences(earAche == "yes")
+		Hypothesis( description == "haemorrhage", value == "upper type")
+		eval(answer(Evidence.EARACHE, "yes"))
 	then
 		Conclusion c = new Conclusion(Conclusion.OTORRHAGIA);
 		insert(c);
@@ -54,8 +53,8 @@ end
 
 rule "r4"
 	when
-		Hypothesis( description == "upper type")
-		Evidences(deafness == "yes")
+		Hypothesis( description == "haemorrhage", value == "upper type")
+		eval(answer(Evidence.DEAFNESS, "yes"))
 	then
 		Conclusion c = new Conclusion(Conclusion.OTORRHAGIA);
 		insert(c);
@@ -63,8 +62,8 @@ end
 
 rule "r5"
 	when
-		Hypothesis( description == "upper type")
-		Evidences(cerebrospinal == "yes")
+		Hypothesis( description == "haemorrhage", value == "upper type")
+		eval(answer(Evidence.CEREBROSPINAL, "yes"))
 	then
 		Conclusion c = new Conclusion(Conclusion.SKULL_FRACTURE);
 		insert(c);
@@ -72,8 +71,8 @@ end
 
 rule "r6"
 	when
-		Hypothesis( description == "lower type")
-		Evidences(bloodNose == "yes")
+		Hypothesis( description == "haemorrhage", value == "lower type")
+		eval(answer(Evidence.BLOOD_NOSE, "yes"))
 	then
 		Conclusion c = new Conclusion(Conclusion.EPISTAXE);
 		insert(c);
@@ -81,8 +80,10 @@ end
 
 rule "r7"
 	when
-		Hypothesis( description == "lower type")
-		Evidences(bloodMouth == "yes", bloodBrown == "yes", vomiting == "yes")
+		Hypothesis( description == "haemorrhage", value == "lower type")
+		eval(answer(Evidence.BLOOD_MOUTH, "yes"))
+		eval(answer(Evidence.BLOOD_BROWN, "yes"))
+		eval(answer(Evidence.VOMITING, "yes"))
 	then
 		Conclusion c = new Conclusion(Conclusion.HEMATHESE);
 		insert(c);
@@ -90,8 +91,10 @@ end
 
 rule "r8"
 	when
-		Hypothesis( description == "lower type")
-		Evidences(bloodMouth == "yes", bloodBrown == "no", vomiting == "no")
+		Hypothesis( description == "haemorrhage", value == "lower type")
+		eval(answer(Evidence.BLOOD_MOUTH, "yes"))
+		eval(answer(Evidence.BLOOD_BROWN, "no"))
+		eval(answer(Evidence.VOMITING, "no"))
 	then
 		Conclusion c = new Conclusion(Conclusion.MOUTH_HAEMORRHAGE);
 		insert(c);
@@ -99,8 +102,8 @@ end
 
 rule "r9"
 	when
-		Hypothesis( description == "lower type")
-		Evidences(bloodVagina == "yes")
+		Hypothesis( description == "haemorrhage", value == "lower type")
+		eval(answer(Evidence.BLOOD_VAGINA, "yes"))
 	then
 		Conclusion c = new Conclusion(Conclusion.METRORRHAGIA);
 		insert(c);
@@ -108,8 +111,8 @@ end
 
 rule "r10"
 	when
-		Hypothesis( description == "lower type")
-		Evidences(bloodPenis == "yes")
+		Hypothesis( description == "haemorrhage", value == "lower type")
+		eval(answer(Evidence.BLOOD_PENIS, "yes"))
 	then
 		Conclusion c = new Conclusion(Conclusion.HEMATURIA);
 		insert(c);
@@ -117,8 +120,9 @@ end
 
 rule "r11"
 	when
-		Hypothesis( description == "lower type")
-		Evidences(bloodAnus == "yes", bloodCoffee == "yes")
+		Hypothesis( description == "haemorrhage", value == "lower type")
+		eval(answer(Evidence.BLOOD_ANUS, "yes"))
+		eval(answer(Evidence.BLOOD_COFFEE, "yes"))
 	then
 		Conclusion c = new Conclusion(Conclusion.MELENA);
 		insert(c);
@@ -126,8 +130,9 @@ end
 
 rule "r12"
 	when
-		Hypothesis( description == "lower type")
-		Evidences(bloodAnus == "yes", bloodCoffee == "no")
+		Hypothesis( description == "haemorrhage", value == "lower type")
+		eval(answer(Evidence.BLOOD_ANUS, "yes"))
+		eval(answer(Evidence.BLOOD_COFFEE, "no"))
 	then
 		Conclusion c = new Conclusion(Conclusion.RECTAL_BLEEDING);
 		insert(c);
@@ -139,5 +144,9 @@ rule "unknown"
 	then
 		Conclusion c = new Conclusion(Conclusion.UNKNOWN);
 		insert(c);
+end
+
+query "evidence"(String ev, String v)
+	e : Evidence( evidence == ev, value == v )
 end
 

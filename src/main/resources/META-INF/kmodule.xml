@@ -4,5 +4,4 @@
   <kbase name="rules" packages="org.engcia">
     <ksession name="ksession-rules"/>
   </kbase>
-
 </kmodule>

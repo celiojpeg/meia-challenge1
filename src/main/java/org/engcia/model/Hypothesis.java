@@ -1,18 +1,26 @@
 package org.engcia.model;
 
-public class Hypothesis {
-    private String description;
+import org.engcia.haemorrhage.Haemorrhage;
 
-    public Hypothesis(String description) {
-        super();
+public class Hypothesis extends Fact{
+    private String description;
+    private String value;
+
+    public Hypothesis(String description, String value) {
         this.description = description;
+        this.value = value;
+        Haemorrhage.agendaEventListener.addRhs(this);
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public String getValue() {
+        return value;
+    }
+
+    public String toString() {
+        return (description + " = " + value);
     }
 }

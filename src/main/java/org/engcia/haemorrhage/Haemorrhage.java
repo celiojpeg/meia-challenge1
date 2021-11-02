@@ -1,47 +1,50 @@
-package org.engcia;
+package org.engcia.haemorrhage;
 
-import org.engcia.model.Evidences;
-import org.engcia.model.Conclusion;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.kie.api.KieServices;
+import org.kie.api.event.rule.AgendaEventListener;
+import org.kie.api.runtime.ClassObjectFilter;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.LiveQuery;
 import org.kie.api.runtime.rule.Row;
 import org.kie.api.runtime.rule.ViewChangedEventListener;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.engcia.model.Conclusion;
+import org.engcia.model.Evidence;
+import org.engcia.model.Fact;
+import org.engcia.model.Justification;
+import org.engcia.view.UI;
 
 public class Haemorrhage {
-    static final Logger LOG = LoggerFactory.getLogger(Haemorrhage.class);
+    public static KieSession KS;
+    public static BufferedReader BR;
+    public static TrackingAgendaEventListener agendaEventListener;
+    public static Map<Integer, Justification> justifications;
 
     public static final void main(String[] args) {
-        Evidences evidences = new Evidences();
-        evidences.setBloodAnus("no");
-        evidences.setBloodBrown("no");
-        evidences.setBloodCoffee("no");
-        evidences.setBloodEar("yes");
-        evidences.setBloodMouth("no");
-        evidences.setBloodNose("no");
-        evidences.setBloodPenis("no");
-        evidences.setBloodVagina("no");
-        evidences.setCerebrospinal("no");
-        evidences.setDeafness("no");
-        evidences.setEarAche("yes");
-        evidences.setHeadAche("no");
-        evidences.setVomiting("no");
-
-        runEngine(evidences);
+        UI.uiInit();
+        runEngine();
+        UI.uiClose();
     }
 
-    private static void runEngine(Evidences evidences) {
+    private static void runEngine() {
         try {
+            Haemorrhage.justifications = new TreeMap<Integer, Justification>();
+
             // load up the knowledge base
             KieServices ks = KieServices.Factory.get();
             KieContainer kContainer = ks.getKieClasspathContainer();
             final KieSession kSession = kContainer.newKieSession("ksession-rules");
-            // session name defined in kmodule.xml"
+            Haemorrhage.KS = kSession;
+            Haemorrhage.agendaEventListener = new TrackingAgendaEventListener();
+            kSession.addEventListener(agendaEventListener);
 
             // Query listener
             ViewChangedEventListener listener = new ViewChangedEventListener() {
@@ -52,8 +55,11 @@ public class Haemorrhage {
                 @Override
                 public void rowInserted(Row row) {
                     Conclusion conclusion = (Conclusion) row.get("$conclusion");
-                    //System.out.println(">>>" + conclusion.toString());
-                    LOG.info(">>>" + conclusion.toString());
+                    System.out.println(">>>" + conclusion.toString());
+
+                    //System.out.println(Haemorrhage.justifications);
+                    How how = new How(Haemorrhage.justifications);
+                    System.out.println(how.getHowExplanation(conclusion.getId()));
 
                     // stop inference engine after as soon as got a conclusion
                     kSession.halt();
@@ -65,9 +71,8 @@ public class Haemorrhage {
                 }
 
             };
-            LiveQuery query = kSession.openLiveQuery("Conclusions", null, listener);
 
-            kSession.insert(evidences);
+            LiveQuery query = kSession.openLiveQuery("Conclusions", null, listener);
 
             kSession.fireAllRules();
             // kSession.fireUntilHalt();
@@ -78,4 +83,6 @@ public class Haemorrhage {
             t.printStackTrace();
         }
     }
+
 }
+
