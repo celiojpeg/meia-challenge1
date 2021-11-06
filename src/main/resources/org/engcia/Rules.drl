@@ -5,6 +5,33 @@ import org.engcia.cf.model.Evidence;
 import org.engcia.cf.model.Hypothesis;
 import org.engcia.cf.listeners.TrackingAgendaListener;
 
+
+//////////////////////////////////////////////////////////////////////
+// EXEMPLO HEMORROGIAS
+rule "r2:Motive"
+@CF(0.60)
+lock-on-active true
+when
+	Evidence( description == "motive", value == "true" )
+then
+	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "guilty", "true");
+	$h.update();
+end
+
+rule "r3:Alibi"
+@CF(-0.80)
+lock-on-active true
+when
+	Evidence( description == "alibi", value == "true" )
+then
+	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "guilty", "true");
+	$h.update();
+end
+
+
+///////////////////////////////////////////////////////////////////////////
+//PROJETO
+
 rule "r1:Preco Prioritário"
 @CF(0.33)
 lock-on-active true
@@ -36,38 +63,434 @@ then
 end
 
 rule "r4.Mais Quilometragem"
-
+@CF(1.00)
+lock-on-active true
 	when
-		Hypothesis( description == "Prioridade", value == "Preco")
-		eval(answer(Evidence.QUAL_O_PRECO, "no"))
-		eval(answer(Evidence.ANTIGUIDADE_QUILOMETRAGEM, "no"))
+		Hypothesis( description == "prioridade_preco", value == "true")
+		Evidence( description == "QUAL_O_PRECO", value == "false" )
+		Evidence( description == "ANTIGUIDADE_QUILOMETRAGEM", value == "false" )
 	then
-
-		Hypothesis h = new Hypothesis("Mais Quilometragem", "");
-        insert(h);
+        Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "mais_quilometragem", "true");
+    	$h.update();
 end
 
-rule "r2:Motive"
-@CF(0.60)
+rule "r5.Mais Antigo"
+@CF(1.00)
 lock-on-active true
-when
-	Evidence( description == "motive", value == "true" )
-then
-	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "guilty", "true");
-	$h.update();
+	when
+		Hypothesis( description == "prioridade_preco", value == "true")
+		Evidence( description == "QUAL_O_PRECO", value == "false" )
+        Evidence( description == "ANTIGUIDADE_QUILOMETRAGEM", value == "true" )
+	then
+        Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "mais_antigo", "true");
+        $h.update();
 end
 
-rule "r3:Alibi"
-@CF(-0.80)
+rule "r6.Imposto Relevante"
+@CF(1.00)
 lock-on-active true
-when
-	Evidence( description == "alibi", value == "true" )
-then
-	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "guilty", "true");
-	$h.update();
+	when
+		Hypothesis( description == "mais_antigo", value == "true")
+		Evidence( description == "IMPOSTO_VEICULO", value == "true" )
+	then
+	    //CONFIRMAR
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo01", "true");
+        $h.update();
+		Conclusion c = new Conclusion(Conclusion.TIPO01);
+		insert(c);
+end
+
+rule "r7.Imposto Nao Relevante"
+@CF(1.00)
+lock-on-active true
+	when
+		Hypothesis( description == "mais_antigo", value == "true")
+		Evidence( description == "IMPOSTO_VEICULO", value == "false" )
+	then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo02", "true");
+        $h.update();
+		Conclusion c = new Conclusion(Conclusion.TIPO02);
+		insert(c);
+end
+
+rule "r8.Estado Veiculo Relevante"
+@CF(1.00)
+lock-on-active true
+	when
+		Hypothesis( description == "mais_quilometragem", value == "true")
+		Evidence( description == "ESTADO_VEICULO", value == "true" )
+	then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo03", "true");
+        $h.update();
+		Conclusion c = new Conclusion(Conclusion.TIPO03);
+		insert(c);
+end
+
+rule "r9.Estado Veiculo Nao Relevante"
+@CF(1.00)
+lock-on-active true
+	when
+		Hypothesis( description == "mais_quilometragem", value == "true")
+		Evidence( description == "ESTADO_VEICULO", value == "false" )
+	then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo04", "true");
+        $h.update();
+		Conclusion c = new Conclusion(Conclusion.TIPO04);
+		insert(c);
+end
+
+rule "r10.Mais 10 Mil - Consumo"
+@CF(0.50)
+lock-on-active true
+	when
+		Hypothesis( description == "prioridade_preco", value == "true")
+		Evidence( description == "QUAL_O_PRECO", value == "true" )
+		Evidence( description == "CONSUMO_PRIORITARIO", value == "true" )
+	then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "prioridade_consumo", "true");
+        $h.update();
+end
+
+rule "r11.Mais 10 Mil - Design"
+@CF(0.50)
+lock-on-active true
+	when
+		Hypothesis( description == "prioridade_preco", value == "true")
+		Evidence( description == "QUAL_O_PRECO", value == "true" )
+		Evidence( description == "CONSUMO_PRIORITARIO", value == "false" )
+	then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "prioridade_design", "true");
+        $h.update();
+end
+
+rule "r12.Combustiveis Fosseis"
+@CF(1.00)
+lock-on-active true
+	when
+		Hypothesis( description == "prioridade_consumo", value == "true")
+		Evidence( description == "COMBUSTIVEIS_FOSSEIS", value == "true" )
+	then
+		Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "combustiveis_fosseis", "true");
+        $h.update();
+end
+
+rule "r13.Carro Eletrico"
+@CF(1.00)
+lock-on-active true
+	when
+		Hypothesis( description == "prioridade_consumo", value == "true")
+		Evidence( description == "COMBUSTIVEIS_FOSSEIS", value == "false" )
+	then
+		Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "carro_eletrico", "true");
+        $h.update();
+end
+
+rule "r14.Carro Gasoleo"
+@CF(1.00)
+lock-on-active true
+	when
+		Hypothesis( description == "combustiveis_fosseis", value == "true")
+		Evidence( description == "MEDIA_CONSUMO", value == "true" )
+	then
+		Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "carro_gasoleo", "true");
+        $h.update();
+end
+
+rule "r15.Carro Gasolina"
+@CF(1.00)
+lock-on-active true
+	when
+		Hypothesis( description == "combustiveis_fosseis", value == "true")
+		Evidence( description == "MEDIA_CONSUMO", value == "false" )
+	then
+		Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "carro_gasolina", "true");
+        $h.update();
+end
+
+rule "r16.Emissoes Nao Relevantes"
+@CF(1.00)
+lock-on-active true
+	when
+		Hypothesis( description == "carro_gasoleo", value == "true")
+		Evidence( description == "EMISSOES", value == "true" )
+	then
+        Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo05", "true");
+        $h.update();
+        Conclusion c = new Conclusion(Conclusion.TIPO05);
+        insert(c);
+end
+
+rule "r17.Emissoes Nao Relevantes"
+@CF(1.00)
+lock-on-active true
+	when
+		Hypothesis( description == "carro_gasoleo", value == "true")
+		Evidence( description == "EMISSOES", value == "false" )
+	then
+        Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo06", "true");
+        $h.update();
+        Conclusion c = new Conclusion(Conclusion.TIPO06);
+        insert(c);
+end
+
+rule "r18.Performance Relevante"
+@CF(1.00)
+lock-on-active true
+	when
+		Hypothesis( description == "carro_gasolina", value == "true")
+		Evidence( description == "PERFORMANCE", value == "true" )
+	then
+        Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo07", "true");
+        $h.update();
+        Conclusion c = new Conclusion(Conclusion.TIPO07);
+        insert(c);
+end
+
+rule "r19.Performance Nao Relevante"
+@CF(1.00)
+lock-on-active true
+	when
+		Hypothesis( description == "carro_gasolina", value == "true")
+		Evidence( description == "PERFORMANCE", value == "false" )
+	then
+        Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo08", "true");
+        $h.update();
+        Conclusion c = new Conclusion(Conclusion.TIPO08);
+        insert(c);
+end
+
+rule "r20.Carro Eletrico Mais 200km Diário - Piloto Automatico"
+@CF(1.00)
+lock-on-active true
+	when
+		Hypothesis( description == "carro_eletrico", value == "true")
+		Evidence( description == "MAIS_200KM", value == "true" )
+		Evidence( description == "PILOTO_AUTOMATICO", value == "true" )
+	then
+		Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo10", "true");
+        $h.update();
+        Conclusion c = new Conclusion(Conclusion.TIPO10);
+        insert(c);
+end
+
+rule "r21.Carro Eletrico Mais 200km Diário - Piloto Automatico"
+@CF(1.00)
+lock-on-active true
+	when
+		Hypothesis( description == "carro_eletrico", value == "true")
+		Evidence( description == "MAIS_200KM", value == "true" )
+		Evidence( description == "PILOTO_AUTOMATICO", value == "false" )
+	then
+		Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo11", "true");
+        $h.update();
+        Conclusion c = new Conclusion(Conclusion.TIPO11);
+        insert(c);
+end
+
+rule "r22.Carro Eletrico Menos 200km Diário - Sem Carregamento Diario"
+@CF(1.00)
+lock-on-active true
+	when
+		Hypothesis( description == "carro_eletrico", value == "true")
+		Evidence( description == "MAIS_200KM", value == "false" )
+		Evidence( description == "CARREGAMENTO_DIÁRIO", value == "false" )
+	then
+		Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo09", "true");
+        $h.update();
+        Conclusion c = new Conclusion(Conclusion.TIPO09);
+        insert(c);
+end
+
+rule "r22.Carro Eletrico Menos 200km Diário - Sem Carregamento Diario - Piloto Automatico"
+@CF(1.00)
+lock-on-active true
+	when
+		Hypothesis( description == "carro_eletrico", value == "true")
+		Evidence( description == "MAIS_200KM", value == "false" )
+		Evidence( description == "CARREGAMENTO_DIÁRIO", value == "true" )
+		Evidence( description == "PILOTO_AUTOMATICO", value == "true" )
+	then
+		Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo10", "true");
+        $h.update();
+        //NAO PODE SER NEW
+        Conclusion c = new Conclusion(Conclusion.TIPO10);
+        insert(c);
+end
+
+rule "r23.Carro Eletrico Menos 200km Diário - Sem Carregamento Diario -  Sem Piloto Automatico"
+@CF(1.00)
+lock-on-active true
+	when
+		Hypothesis( description == "carro_eletrico", value == "true")
+		Evidence( description == "MAIS_200KM", value == "false" )
+		Evidence( description == "CARREGAMENTO_DIÁRIO", value == "true" )
+		Evidence( description == "PILOTO_AUTOMATICO", value == "false" )
+	then
+		Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo11", "true");
+        $h.update();
+        //NAO PODE SER NEW
+        Conclusion c = new Conclusion(Conclusion.TIPO11);
+        insert(c);
+end
+
+rule "r24:Carro Versatil"
+@CF(0.33)
+lock-on-active true
+    when
+	    Hypothesis( description == "prioridade_design", value == "true")
+	    Evidence( description == "CARRO_VERSATIL", value == "true" )
+    then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "perfil-versatil", "true");
+	    $h.update();
+end
+
+rule "r25:Carro Desportivo"
+@CF(0.33)
+lock-on-active true
+    when
+	    Hypothesis( description == "prioridade_design", value == "true")
+	    Evidence( description == "CARRO_VERSATIL", value == "false" )
+	    Evidence( description == "CARRO_FAMILIAR", value == "false" )
+
+    then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "perfil_desportivo", "true");
+	    $h.update();
+end
+
+rule "r26:Carro Familiar"
+@CF(0.33)
+lock-on-active true
+    when
+	    Hypothesis( description == "prioridade_design", value == "true")
+	    Evidence( description == "CARRO_VERSATIL", value == "false" )
+	    Evidence( description == "CARRO_FAMILIAR", value == "true" )
+
+    then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "perfil_familiar", "true");
+	    $h.update();
+end
+
+rule "r27:SUV Off Road"
+@CF(1.00)
+lock-on-active true
+    when
+	    Hypothesis( description == "perfil_versatil", value == "true")
+	    Evidence( description == "TIPO_SUV_OFF_ROAD", value == "true" )
+    then
+    	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "suv_off_road", "true");
+	    $h.update();
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo13", "true");
+        $h.update();
+        Conclusion c = new Conclusion(Conclusion.TIPO13);
+        insert(c);
+end
+
+rule "r28:SUV On Road"
+@CF(1.00)
+lock-on-active true
+    when
+	    Hypothesis( description == "perfil_versatil", value == "true")
+	    Evidence( description == "TIPO_SUV_OFF_ROAD", value == "false" )
+    then
+    	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "suv_on_road", "true");
+	    $h.update();
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo12", "true");
+        $h.update();
+        Conclusion c = new Conclusion(Conclusion.TIPO12);
+        insert(c);
+end
+
+rule "r29:Familiar 7 Lugares"
+@CF(1.00)
+lock-on-active true
+    when
+	    Hypothesis( description == "perfil_familiar", value == "true")
+	    Evidence( description == "FAMILIAR_7_LUGARES", value == "true" )
+    then
+    	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "familiar_7lugares", "true");
+	    $h.update();
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo17", "true");
+        $h.update();
+        Conclusion c = new Conclusion(Conclusion.TIPO17);
+        insert(c);
+end
+
+rule "r30:Familiar 4-5 Lugares"
+@CF(1.00)
+lock-on-active true
+    when
+	    Hypothesis( description == "perfil_familiar", value == "true")
+	    Evidence( description == "FAMILIAR_7_LUGARES", value == "false" )
+    then
+    	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "familiar_45lugares", "true");
+	    $h.update();
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo18", "true");
+        $h.update();
+        Conclusion c = new Conclusion(Conclusion.TIPO18);
+        insert(c);
+end
+
+rule "r31:Desportivo 2 portas"
+@CF(1.00)
+lock-on-active true
+    when
+	    Hypothesis( description == "perfil_desportivo", value == "true")
+	    Evidence( description == "DESPORTIVO_2PORTAS", value == "true" )
+    then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "desportivo_2portas", "true");
+	    $h.update();
+end
+
+rule "r32:Desportivo Cabrio"
+@CF(1.00)
+lock-on-active true
+    when
+	    Hypothesis( description == "perfil_desportivo", value == "true")
+	    Evidence( description == "DESPORTIVO_CABRIO", value == "true" )
+    then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo14", "true");
+        $h.update();
+        Conclusion c = new Conclusion(Conclusion.TIPO14);
+        insert(c);
+end
+
+rule "r33:Desportivo Cabrio"
+@CF(1.00)
+lock-on-active true
+    when
+	    Hypothesis( description == "perfil_desportivo", value == "true")
+	    Evidence( description == "DESPORTIVO_CABRIO", value == "false" )
+    then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo15", "true");
+        $h.update();
+        Conclusion c = new Conclusion(Conclusion.TIPO15);
+        insert(c);
+end
+
+rule "r34:Desportivo 4-5 Portas"
+@CF(1.00)
+lock-on-active true
+    when
+	    Hypothesis( description == "perfil_desportivo", value == "true")
+	    Evidence( description == "DESPORTIVO_2PORTAS", value == "false" )
+    then
+    	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "desportivo_45portas", "true");
+	    $h.update();
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "tipo16", "true");
+        $h.update();
+        Conclusion c = new Conclusion(Conclusion.TIPO16);
+        insert(c);
 end
 
 
+
+
+
+
+
+
+
+//ANTIGAS REGRAS
 
 rule "r2.consumo_prioritario"
 	when
