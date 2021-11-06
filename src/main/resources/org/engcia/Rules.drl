@@ -5,14 +5,46 @@ import org.engcia.cf.model.Evidence;
 import org.engcia.cf.model.Hypothesis;
 import org.engcia.cf.listeners.TrackingAgendaListener;
 
-rule "r1:Fingerprints on the weapon"
-@CF(0.75)
+rule "r1:Preco Prioritário"
+@CF(0.33)
 lock-on-active true
 when
-	Evidence( description == "fingerprints", value == "true" )
+	Evidence( description == "PRECO_PRIORITARIO", value == "true" )
 then
-	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "guilty", "true");
+	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "prioridade_preco", "true");
 	$h.update();
+end
+
+rule "r2:Consumo Prioritário"
+@CF(0.33)
+lock-on-active true
+when
+	Evidence( description == "CONSUMO_PRIORITARIO", value == "true" )
+then
+	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "prioridade_consumo", "true");
+	$h.update();
+end
+
+rule "r3:Design Prioritário"
+@CF(0.33)
+lock-on-active true
+when
+	Evidence( description == "DESIGN_PRIORITARIO", value == "true" )
+then
+	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "prioridade_design", "true");
+	$h.update();
+end
+
+rule "r4.Mais Quilometragem"
+
+	when
+		Hypothesis( description == "Prioridade", value == "Preco")
+		eval(answer(Evidence.QUAL_O_PRECO, "no"))
+		eval(answer(Evidence.ANTIGUIDADE_QUILOMETRAGEM, "no"))
+	then
+
+		Hypothesis h = new Hypothesis("Mais Quilometragem", "");
+        insert(h);
 end
 
 rule "r2:Motive"
@@ -33,6 +65,124 @@ when
 then
 	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "guilty", "true");
 	$h.update();
+end
+
+
+
+rule "r2.consumo_prioritario"
+	when
+		eval(answer(Evidence.PRECO_PRIORITARIO, "no" ))
+		eval(answer(Evidence.CONSUMO_PRIORITARIO, "yes" ))
+	then
+		Hypothesis h = new Hypothesis("Prioridade", "Consumo");
+		insert(h);
+end
+
+rule "r3.design_prioritario"
+	when
+		eval(answer(Evidence.PRECO_PRIORITARIO, "no" ))
+		eval(answer(Evidence.CONSUMO_PRIORITARIO, "no" ))
+	then
+		Hypothesis h = new Hypothesis("Prioridade", "Design");
+		insert(h);
+end
+
+rule "r4.mais_quilometragem"
+	when
+		Hypothesis( description == "Prioridade", value == "Preco")
+		eval(answer(Evidence.QUAL_O_PRECO, "no"))
+		eval(answer(Evidence.ANTIGUIDADE_QUILOMETRAGEM, "no"))
+	then
+
+		Hypothesis h = new Hypothesis("Mais Quilometragem", "");
+        insert(h);
+end
+
+rule "r5.mais_antigo"
+	when
+		Hypothesis( description == "Prioridade", value == "Preco")
+		eval(answer(Evidence.QUAL_O_PRECO, "no"))
+		eval(answer(Evidence.ANTIGUIDADE_QUILOMETRAGEM, "yes"))
+	then
+
+		Hypothesis h = new Hypothesis("Mais Antigo", "");
+        insert(h);
+end
+
+rule "r6.imposto_relevante"
+	when
+		Hypothesis( description == "Mais Antigo", value == "")
+		eval(answer(Evidence.IMPOSTO_VEICULO, "yes"))
+	then
+		Conclusion c = new Conclusion(Conclusion.TIPO01);
+		insert(c);
+end
+
+rule "r7.imposto_nao_relevante"
+	when
+		Hypothesis( description == "Mais Antigo", value == "")
+		eval(answer(Evidence.IMPOSTO_VEICULO, "no"))
+	then
+		Conclusion c = new Conclusion(Conclusion.TIPO02);
+		insert(c);
+end
+
+rule "r8.estado_veiculo_relevante"
+	when
+		Hypothesis( description == "Mais Quilometragem", value == "")
+		eval(answer(Evidence.ESTADO_VEICULO, "yes"))
+	then
+		Conclusion c = new Conclusion(Conclusion.TIPO03);
+		insert(c);
+end
+
+rule "r9.estado_veiculo_nao_relevante"
+	when
+		Hypothesis( description == "Mais Quilometragem", value == "")
+		eval(answer(Evidence.ESTADO_VEICULO, "no"))
+	then
+		Conclusion c = new Conclusion(Conclusion.TIPO04);
+		insert(c);
+end
+
+rule "r10.mais_dezmil_consumo"
+	when
+		Hypothesis( description == "Prioridade", value == "Preco")
+		eval(answer(Evidence.QUAL_O_PRECO, "yes"))
+		eval(answer(Evidence.CONSUMO_PRIORITARIO, "yes))
+	then
+		Hypothesis h = new Hypothesis("Prioridade", "Consumo");
+        insert(h);
+end
+
+rule "r11.mais_dezmil_design"
+	when
+		Hypothesis( description == "Prioridade", value == "Preco")
+		eval(answer(Evidence.QUAL_O_PRECO, "yes"))
+		eval(answer(Evidence.CONSUMO_PRIORITARIO, "no"))
+	then
+		Hypothesis h = Hypothesis("Prioridade", "Design");
+        insert(h);
+end
+
+rule "r12.combustiveis_fosseis"
+	when
+		Hypothesis( description == "Prioridade", value == "Consumo")
+		eval(answer(Evidence.COMBUSTIVEIS_FOSSEIS, "yes"))
+
+	then
+		Hypothesis h = new Hypothesis("Combustiveis Fosseis", "");
+		insert(h);
+end
+
+rule "r12.combustiveis_fosseis"
+	when
+		Hypothesis( description == "Prioridade", value == "Consumo")
+		eval(answer(Evidence.COMBUSTIVEIS_FOSSEIS, "yes"))
+
+	then
+		Hypothesis h = new Hypothesis("Combustiveis Fosseis", "");
+		insert(h);
 end
 
 	
