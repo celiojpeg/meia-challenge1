@@ -12,7 +12,7 @@ rule "r1:Preco Prioritário"
 @CF(1.00)
 lock-on-active true
 when
-	Evidence( description == Evidence.PRECO_PRIORITARIO, value == "true" )
+	Evidence( description == "PRECO_PRIORITARIO", value == "true" )
 then
 	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "prioridade_preco", "true");
 	$h.update();
@@ -22,7 +22,7 @@ rule "r2:Consumo Prioritário"
 @CF(1.00)
 lock-on-active true
 when
-	Evidence( description == Evidence.CONSUMO_PRIORITARIO, value == "true" )
+	Evidence( description == "CONSUMO_PRIORITARIO", value == "true" )
 then
 	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "prioridade_consumo", "true");
 	$h.update();
@@ -32,7 +32,7 @@ rule "r3:Design Prioritário"
 @CF(1.00)
 lock-on-active true
 when
-	Evidence( description == Evidence.DESIGN_PRIORITARIO, value == "true" )
+	Evidence( description == "DESIGN_PRIORITARIO", value == "true" )
 then
 	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "prioridade_design", "true");
 	$h.update();
@@ -43,8 +43,8 @@ rule "r4.Mais Quilometragem"
 lock-on-active true
 	when
 		Hypothesis( description == "prioridade_preco", value == "true")
-		Evidence( description == Evidence.QUAL_O_PRECO, value == "false" )
-		Evidence( description == Evidence.ANTIGUIDADE_QUILOMETRAGEM, value == "false" )
+		Evidence( description == "QUAL_O_PRECO", value == "false" )
+		Evidence( description == "ANTIGUIDADE_QUILOMETRAGEM", value == "false" )
 	then
         Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "mais_quilometragem", "true");
     	$h.update();

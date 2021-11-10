@@ -2,7 +2,7 @@ package org.engcia.cf.model;
 
 public class Evidence extends FactCF{
 
-	public static final String PRECO_PRIORITARIO = "O preço é o fator prioritário em relação ao consume e design";
+	public static final String PRECO_PRIORITARIO = "O preço é o fator prioritário em relação ao consumo e design";
 	public static final String CONSUMO_PRIORITARIO = "O consumo é o fator prioritário em relação ao design";
 	public static final String DESIGN_PRIORITARIO = "O design é o fator prioritário";
 	public static final String QUAL_O_PRECO = "Disposto a pagar mais de 10.000€";

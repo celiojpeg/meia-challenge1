@@ -31,25 +31,24 @@ public class DroolsTest {
         	kSession.addEventListener(new FactListener());
 
             // go !
-            
-            kSession.insert(new Evidence(0.50, Evidence.PRECO_PRIORITARIO, "true"));
-            //kSession.insert(new Evidence(0.25, Evidence.CONSUMO_PRIORITARIO, "true"));
+            kSession.insert(new Evidence(1.00, "PRECO_PRIORITARIO", "true"));
+           //kSession.insert(new Evidence(0.25, Evidence.CONSUMO_PRIORITARIO, "true"));
             //kSession.insert(new Evidence(0.25, Evidence.DESIGN_PRIORITARIO, "true"));
             //kSession.insert(new Evidence(1.00, Evidence.PRECO_MAIS_10K, "true"));
             //kSession.insert(new Evidence(-1.00, Evidence.PRECO_MENOS_10K, "true"));
 
             kSession.insert(new Hypothesis(0.00, "prioridade_preco", "true"));
-            //kSession.insert(new Hypothesis(0.00, "prioridade_consumo", "true"));
             //kSession.insert(new Hypothesis(0.00, "prioridade_design", "true"));
 
 
-            kSession.insert(new Evidence(0.50, Evidence.QUAL_O_PRECO, "false"));
-            kSession.insert(new Evidence(0.50, Evidence.ANTIGUIDADE_QUILOMETRAGEM, "false"));
-            kSession.insert(new Evidence(0.50, Evidence.ESTADO_VEICULO, "false"));
+            kSession.insert(new Evidence(0.50, "QUAL_O_PRECO", "false"));
+            //kSession.insert(new Hypothesis(1.00, "mais_quilometragem", "true"));
+            kSession.insert(new Evidence(0.50, "ANTIGUIDADE_QUILOMETRAGEM", "false"));
+            //kSession.insert(new Evidence(0.50, Evidence.ESTADO_VEICULO, "false"));
 
-            kSession.insert(new Hypothesis(0.00, "mais_quilometragem", "true"));
+            kSession.insert(new Hypothesis(1.00, "mais_quilometragem", "true"));
 
-            //kSession.insert(new Evidence(1.00, "ESTADO_VEICULO", "true"));
+            kSession.insert(new Evidence(1.00, "ESTADO_VEICULO", "false"));
 
 
            // kSession.insert(new Hypothesis(0.50, "mais_antigo", "true"));
