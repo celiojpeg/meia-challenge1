@@ -3,6 +3,8 @@ package org.engcia.cf.model;
 import org.kie.api.runtime.rule.FactHandle;
 import org.engcia.cf.listeners.TrackingAgendaListener;
 
+import javax.xml.bind.SchemaOutputResolver;
+
 public class FactCF implements Comparable<FactCF>, Uncertainty {
 	private double cf;
 	private String description;
@@ -66,6 +68,7 @@ public class FactCF implements Comparable<FactCF>, Uncertainty {
 		
 		// get conclusion fact handle
 		FactHandle fHandle = TrackingAgendaListener.getKieSession().getFactHandle(this);
+
 		
 		double lhsCF = TrackingAgendaListener.getLHSminimumCF(this);
 		

@@ -6,58 +6,33 @@ import org.engcia.cf.model.Hypothesis;
 import org.engcia.cf.listeners.TrackingAgendaListener
 import org.engcia.cf.model.Conclusion;
 
-
-//////////////////////////////////////////////////////////////////////
-// EXEMPLO HEMORROGIAS
-rule "r2:Motive"
-@CF(0.60)
-lock-on-active true
-when
-	Evidence( description == "motive", value == "true" )
-then
-	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "guilty", "true");
-	$h.update();
-end
-
-rule "r3:Alibi"
-@CF(-0.80)
-lock-on-active true
-when
-	Evidence( description == "alibi", value == "true" )
-then
-	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "guilty", "true");
-	$h.update();
-end
-
-
-///////////////////////////////////////////////////////////////////////////
 //PROJETO
 
 rule "r1:Preco Prioritário"
-@CF(0.33)
+@CF(1.00)
 lock-on-active true
 when
-	Evidence( description == "PRECO_PRIORITARIO", value == "true" )
+	Evidence( description == Evidence.PRECO_PRIORITARIO, value == "true" )
 then
 	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "prioridade_preco", "true");
 	$h.update();
 end
 
 rule "r2:Consumo Prioritário"
-@CF(0.33)
+@CF(1.00)
 lock-on-active true
 when
-	Evidence( description == "CONSUMO_PRIORITARIO", value == "true" )
+	Evidence( description == Evidence.CONSUMO_PRIORITARIO, value == "true" )
 then
 	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "prioridade_consumo", "true");
 	$h.update();
 end
 
 rule "r3:Design Prioritário"
-@CF(0.33)
+@CF(1.00)
 lock-on-active true
 when
-	Evidence( description == "DESIGN_PRIORITARIO", value == "true" )
+	Evidence( description == Evidence.DESIGN_PRIORITARIO, value == "true" )
 then
 	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "prioridade_design", "true");
 	$h.update();
@@ -68,8 +43,8 @@ rule "r4.Mais Quilometragem"
 lock-on-active true
 	when
 		Hypothesis( description == "prioridade_preco", value == "true")
-		Evidence( description == "QUAL_O_PRECO", value == "false" )
-		Evidence( description == "ANTIGUIDADE_QUILOMETRAGEM", value == "false" )
+		Evidence( description == Evidence.QUAL_O_PRECO, value == "false" )
+		Evidence( description == Evidence.ANTIGUIDADE_QUILOMETRAGEM, value == "false" )
 	then
         Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "mais_quilometragem", "true");
     	$h.update();
