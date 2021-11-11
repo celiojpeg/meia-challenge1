@@ -1,6 +1,8 @@
 package org.engcia.cf.model;
 
-public class Conclusion {
+import javax.swing.*;
+
+public class Conclusion extends Hypothesis{
     public static final String TIPO01 = "Categoria de carros tipo 01";
     public static final String TIPO02 = "Categoria de carros tipo 02";
     public static final String TIPO03 = "Categoria de carros tipo 03";
@@ -21,22 +23,13 @@ public class Conclusion {
     public static final String TIPO18 = "Categoria de carros tipo 18";
 
 
-    private String description;
 
-    public Conclusion(String description) {
-        super();
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public Conclusion(double cf, String description) {
+        super(cf,description);
     }
 
     public String toString() {
-        return "Diagnosis: " + description;
+        return super.toString();
     }
+
 }
