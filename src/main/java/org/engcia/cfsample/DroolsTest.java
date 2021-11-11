@@ -31,52 +31,84 @@ public class DroolsTest {
         	// Facts listener
         	kSession.addEventListener(new FactListener());
 
-            //Hypothesis
-            kSession.insert(new Hypothesis(0.00, "prioridade_preco", "true"));
-            kSession.insert(new Hypothesis(0.00, "prioridade_consumo", "true"));
-            kSession.insert(new Hypothesis(0.00, "prioridade_design", "true"));
-            kSession.insert(new Hypothesis(0.00, "mais_quilometragem", "true"));
-            kSession.insert(new Hypothesis(0.00, "mais_antigo", "true"));
-            kSession.insert(new Hypothesis(0.00, "mais_quilometragem", "true"));
-            kSession.insert(new Hypothesis(0.00, "combustiveis_fosseis", "true"));
-            kSession.insert(new Hypothesis(0.00, "carro_eletrico", "true"));
-            kSession.insert(new Hypothesis(0.00, "carro_gasoleo", "true"));
-            kSession.insert(new Hypothesis(0.00, "carro_gasolina", "true"));
-            kSession.insert(new Hypothesis(0.00, "perfil_versatil", "true"));
-            kSession.insert(new Hypothesis(0.00, "perfil_desportivo", "true"));
-            kSession.insert(new Hypothesis(0.00, "perfil_familiar", "true"));
-            kSession.insert(new Hypothesis(0.00, "suv_on_road", "true"));
-            kSession.insert(new Hypothesis(0.00, "suv_off_road", "true"));
-            kSession.insert(new Hypothesis(0.00, "familiar_7lugares", "true"));
-            kSession.insert(new Hypothesis(0.00, "familiar_45lugares", "true"));
-            kSession.insert(new Hypothesis(0.00, "carro_gasolina", "true"));
-            kSession.insert(new Hypothesis(0.00, "desportivo_2portas", "true"));
-            kSession.insert(new Hypothesis(0.00, "desportivo_45portas", "true"));
-            kSession.insert(new Hypothesis(0.00, "carro_gasolina", "true"));
-            kSession.insert(new Hypothesis(0.00, Conclusion.TIPO01, "true"));
-            kSession.insert(new Hypothesis(0.00, Conclusion.TIPO02, "true"));
-            kSession.insert(new Hypothesis(0.00, Conclusion.TIPO03, "true"));
-            kSession.insert(new Hypothesis(0.00, Conclusion.TIPO04, "true"));
-            kSession.insert(new Hypothesis(0.00, Conclusion.TIPO05, "true"));
-            kSession.insert(new Hypothesis(0.00, Conclusion.TIPO06, "true"));
-            kSession.insert(new Hypothesis(0.00, Conclusion.TIPO07, "true"));
-            kSession.insert(new Hypothesis(0.00, Conclusion.TIPO08, "true"));
-            kSession.insert(new Hypothesis(0.00, Conclusion.TIPO09, "true"));
-            kSession.insert(new Hypothesis(0.00, Conclusion.TIPO10, "true"));
-            kSession.insert(new Hypothesis(0.00, Conclusion.TIPO11, "true"));
-            kSession.insert(new Hypothesis(0.00, Conclusion.TIPO12, "true"));
-            kSession.insert(new Hypothesis(0.00, Conclusion.TIPO13, "true"));
-            kSession.insert(new Hypothesis(0.00, Conclusion.TIPO14, "true"));
-            kSession.insert(new Hypothesis(0.00, Conclusion.TIPO15, "true"));
-            kSession.insert(new Hypothesis(0.00, Conclusion.TIPO16, "true"));
-            kSession.insert(new Hypothesis(0.00, Conclusion.TIPO17, "true"));
-            kSession.insert(new Hypothesis(0.00, Conclusion.TIPO18, "true"));
+            //---------------------- Hypothesis ----------------------
+            kSession.insert(new Hypothesis(0.00, "prioridade_preco"));
+            kSession.insert(new Hypothesis(0.00, "prioridade_consumo"));
+            kSession.insert(new Hypothesis(0.00, "prioridade_design"));
+            kSession.insert(new Hypothesis(0.00, "mais_quilometragem"));
+            kSession.insert(new Hypothesis(0.00, "mais_antigo"));
+            kSession.insert(new Hypothesis(0.00, "mais_quilometragem"));
+            kSession.insert(new Hypothesis(0.00, "combustiveis_fosseis"));
+            kSession.insert(new Hypothesis(0.00, "carro_eletrico"));
+            kSession.insert(new Hypothesis(0.00, "carro_gasoleo"));
+            kSession.insert(new Hypothesis(0.00, "carro_gasolina"));
+            kSession.insert(new Hypothesis(0.00, "perfil_versatil"));
+            kSession.insert(new Hypothesis(0.00, "perfil_desportivo"));
+            kSession.insert(new Hypothesis(0.00, "perfil_familiar"));
+            kSession.insert(new Hypothesis(0.00, "suv_on_road"));
+            kSession.insert(new Hypothesis(0.00, "suv_off_road"));
+            kSession.insert(new Hypothesis(0.00, "familiar_7lugares"));
+            kSession.insert(new Hypothesis(0.00, "familiar_45lugares"));
+            kSession.insert(new Hypothesis(0.00, "carro_gasolina"));
+            kSession.insert(new Hypothesis(0.00, "desportivo_2portas"));
+            kSession.insert(new Hypothesis(0.00, "desportivo_45portas"));
+            kSession.insert(new Hypothesis(0.00, "carro_gasolina"));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO01));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO02));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO03));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO04));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO05));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO06));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO07));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO08));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO09));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO10));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO11));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO12));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO13));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO14));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO15));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO16));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO17));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO18));
 
-            // Evidences
-            kSession.insert(new Evidence(1.00, Evidence.PRECO_PRIORITARIO, "true"));
+            /*
+            ---------------------- Evidences ----------------------
+            ---------------------- Neste exemplo: ----------------------
+                            -70% Preço
+                            -15% Consumo
+                            -15% Design
+
+                            Preço: Tipo 04
+
+                            Consumo: 40% gasolina -> Tipo 07
+                                     60% gasoleo -> Tipo 05
+
+                            Design: 60% versátil -> 70% Tipo 12
+                                                    30% Tipo 13
+                                    20% familiar -> Tipo 17
+                                    20% desportivo -> Tipo 15
+            */
+            kSession.insert(new Evidence(0.70, Evidence.PRECO_PRIORITARIO, "true"));
+            kSession.insert(new Evidence(0.15, Evidence.CONSUMO_PRIORITARIO, "true"));
+            kSession.insert(new Evidence(0.15, Evidence.CONSUMO_PRIORITARIO, "false"));
             kSession.insert(new Evidence(1.00, Evidence.QUAL_O_PRECO, "false"));
-            kSession.insert(new Evidence(0.50, Evidence.ANTIGUIDADE_QUILOMETRAGEM, "false"));
-            kSession.insert(new Evidence(1.00, Evidence.ESTADO_VEICULO, "false"));
+            kSession.insert(new Evidence(1.00, Evidence.ANTIGUIDADE_QUILOMETRAGEM, "false"));
+            kSession.insert(new Evidence(1.00, Evidence.ESTADO_VEICULO, "false")); // -> TIPO 4
+            kSession.insert(new Evidence(1.00, Evidence.COMBUSTIVEIS_FOSSEIS, "true"));
+            kSession.insert(new Evidence(0.60, Evidence.MEDIA_CONSUMO, "false"));
+            kSession.insert(new Evidence(0.40, Evidence.MEDIA_CONSUMO, "true"));
+            kSession.insert(new Evidence(1.00, Evidence.PERFORMANCE, "true")); // -> TIPO 7
+            kSession.insert(new Evidence(1.00, Evidence.EMISSOES, "true")); // -> TIPO 5
+            kSession.insert(new Evidence(0.60, Evidence.CARRO_VERSATIL, "true"));
+            kSession.insert(new Evidence(0.20, Evidence.CARRO_VERSATIL, "false"));
+            kSession.insert(new Evidence(0.20, Evidence.CARRO_FAMILIAR, "false"));
+            kSession.insert(new Evidence(0.20, Evidence.CARRO_FAMILIAR, "true"));
+            kSession.insert(new Evidence(0.70, Evidence.TIPO_SUV_OFF_ROAD, "false")); // -> TIPO 12
+            kSession.insert(new Evidence(0.30, Evidence.TIPO_SUV_OFF_ROAD, "true")); // -> TIPO 13
+            kSession.insert(new Evidence(1.00, Evidence.DESPORTIVO_2PORTAS, "true"));
+            kSession.insert(new Evidence(1.00, Evidence.DESPORTIVO_CABRIO, "false")); // -> TIPO 15
+            kSession.insert(new Evidence(1.00, Evidence.FAMILIAR_7_LUGARES, "true")); // -> TIPO 17
 
             kSession.fireAllRules();
             

@@ -2,7 +2,7 @@ package org.engcia.cf.model;
 
 import javax.swing.*;
 
-public class Conclusion extends Hypothesis{
+public class Conclusion extends FactCF{
     public static final String TIPO01 = "Categoria de carros tipo 01";
     public static final String TIPO02 = "Categoria de carros tipo 02";
     public static final String TIPO03 = "Categoria de carros tipo 03";
@@ -25,7 +25,7 @@ public class Conclusion extends Hypothesis{
 
 
     public Conclusion(double cf, String description) {
-        super(cf,description);
+        super(cf,description,"true");
     }
 
     public String toString() {

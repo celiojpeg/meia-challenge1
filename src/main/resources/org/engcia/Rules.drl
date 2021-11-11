@@ -279,7 +279,7 @@ lock-on-active true
 		Evidence( description == Evidence.PILOTO_AUTOMATICO, value == "false" )
 	then
 	    Conclusion $c = (Conclusion)TrackingAgendaListener.getFactRef(Conclusion.class, Conclusion.TIPO11, "true");
-        $h.update();
+        $c.update();
 end
 
 rule "r25:Carro Versatil"
@@ -289,7 +289,7 @@ lock-on-active true
 	    Hypothesis( description == "prioridade_design", value == "true")
 	    Evidence( description == Evidence.CARRO_VERSATIL, value == "true" )
     then
-	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "perfil-versatil", "true");
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "perfil_versatil", "true");
 	    $h.update();
 end
 
