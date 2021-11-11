@@ -12,7 +12,7 @@ rule "r1:Preco Prioritário"
 @CF(1.00)
 lock-on-active true
 when
-	Evidence( description == "PRECO_PRIORITARIO", value == "true" )
+	Evidence( description == Evidence.PRECO_PRIORITARIO, value == "true" )
 then
 	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "prioridade_preco", "true");
 	$h.update();
@@ -22,7 +22,8 @@ rule "r2:Consumo Prioritário"
 @CF(1.00)
 lock-on-active true
 when
-	Evidence( description == "CONSUMO_PRIORITARIO", value == "true" )
+	Evidence( description == Evidence.PRECO_PRIORITARIO, value == "false" )
+	Evidence( description == Evidence.CONSUMO_PRIORITARIO, value == "true" )
 then
 	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "prioridade_consumo", "true");
 	$h.update();
@@ -32,70 +33,77 @@ rule "r3:Design Prioritário"
 @CF(1.00)
 lock-on-active true
 when
-	Evidence( description == "DESIGN_PRIORITARIO", value == "true" )
+    Evidence( description == Evidence.PRECO_PRIORITARIO, value == "false" )
+	Evidence( description == Evidence.CONSUMO_PRIORITARIO, value == "false" )
 then
 	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "prioridade_design", "true");
 	$h.update();
 end
 
-rule "r4.Mais Quilometragem"
+rule "r4:Mais Quilometragem"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "prioridade_preco", value == "true")
-		Evidence( description == "QUAL_O_PRECO", value == "false" )
-		Evidence( description == "ANTIGUIDADE_QUILOMETRAGEM", value == "false" )
+		Evidence( description == Evidence.QUAL_O_PRECO, value == "false" )
+		Evidence( description == Evidence.ANTIGUIDADE_QUILOMETRAGEM, value == "false" )
 	then
         Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "mais_quilometragem", "true");
     	$h.update();
 end
 
-rule "r5.Mais Antigo"
+rule "r5:Mais Antigo"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "prioridade_preco", value == "true")
-		Evidence( description == "QUAL_O_PRECO", value == "false" )
-        Evidence( description == "ANTIGUIDADE_QUILOMETRAGEM", value == "true" )
+		Evidence( description == Evidence.QUAL_O_PRECO, value == "false" )
+        Evidence( description == Evidence.ANTIGUIDADE_QUILOMETRAGEM, value == "true" )
 	then
         Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "mais_antigo", "true");
         $h.update();
 end
 
-rule "r6.Imposto Relevante"
+rule "r6:Imposto Relevante"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "mais_antigo", value == "true")
-		Evidence( description == "IMPOSTO_VEICULO", value == "true" )
+		Evidence( description == Evidence.IMPOSTO_VEICULO, value == "true" )
 	then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Conclusion.TIPO01, "true");
+        $h.update();
 		Conclusion c = new Conclusion(Conclusion.TIPO01);
 		insert(c);
 end
 
-rule "r7.Imposto Nao Relevante"
+rule "r7:Imposto Nao Relevante"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "mais_antigo", value == "true")
-		Evidence( description == "IMPOSTO_VEICULO", value == "false" )
+		Evidence( description == Evidence.IMPOSTO_VEICULO, value == "false" )
 	then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Conclusion.TIPO02, "true");
+        $h.update();
 		Conclusion c = new Conclusion(Conclusion.TIPO02);
 		insert(c);
 end
 
-rule "r8.Estado Veiculo Relevante"
+rule "r8:Estado Veiculo Relevante"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "mais_quilometragem", value == "true")
-		Evidence( description == "ESTADO_VEICULO", value == "true" )
+		Evidence( description == Evidence.ESTADO_VEICULO, value == "true" )
 	then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Conclusion.TIPO03, "true");
+        $h.update();
 		Conclusion c = new Conclusion(Conclusion.TIPO03);
 		insert(c);
 end
 
-rule "r9.Estado Veiculo Nao Relevante"
+rule "r9:Estado Veiculo Nao Relevante"
 @CF(1.00)
 lock-on-active true
 	when
@@ -107,7 +115,7 @@ lock-on-active true
 end
 
 rule "r10.Mais 10 Mil - Consumo"
-@CF(0.50)
+@CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "prioridade_preco", value == "true")
@@ -119,7 +127,7 @@ lock-on-active true
 end
 
 rule "r11.Mais 10 Mil - Design"
-@CF(0.50)
+@CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "prioridade_preco", value == "true")
@@ -281,7 +289,7 @@ lock-on-active true
 end
 
 rule "r24:Carro Versatil"
-@CF(0.33)
+@CF(1.00)
 lock-on-active true
     when
 	    Hypothesis( description == "prioridade_design", value == "true")
@@ -292,7 +300,7 @@ lock-on-active true
 end
 
 rule "r25:Carro Desportivo"
-@CF(0.33)
+@CF(1.00)
 lock-on-active true
     when
 	    Hypothesis( description == "prioridade_design", value == "true")
@@ -305,7 +313,7 @@ lock-on-active true
 end
 
 rule "r26:Carro Familiar"
-@CF(0.33)
+@CF(1.00)
 lock-on-active true
     when
 	    Hypothesis( description == "prioridade_design", value == "true")
