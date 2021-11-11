@@ -90,25 +90,43 @@ public class DroolsTest {
                                     20% desportivo -> Tipo 15
             */
             kSession.insert(new Evidence(0.70, Evidence.PRECO_PRIORITARIO, "true"));
+            kSession.insert(new Evidence(1.00, Evidence.PRECO_PRIORITARIO, "false"));
             kSession.insert(new Evidence(0.15, Evidence.CONSUMO_PRIORITARIO, "true"));
             kSession.insert(new Evidence(0.15, Evidence.CONSUMO_PRIORITARIO, "false"));
             kSession.insert(new Evidence(1.00, Evidence.QUAL_O_PRECO, "false"));
+            kSession.insert(new Evidence(0.00, Evidence.QUAL_O_PRECO, "true"));
             kSession.insert(new Evidence(1.00, Evidence.ANTIGUIDADE_QUILOMETRAGEM, "false"));
+            kSession.insert(new Evidence(0.00, Evidence.ANTIGUIDADE_QUILOMETRAGEM, "true"));
             kSession.insert(new Evidence(1.00, Evidence.ESTADO_VEICULO, "false")); // -> TIPO 4
+            kSession.insert(new Evidence(0.00, Evidence.ESTADO_VEICULO, "true"));
+            kSession.insert(new Evidence(0.00, Evidence.IMPOSTO_VEICULO, "true"));
+            kSession.insert(new Evidence(0.00, Evidence.IMPOSTO_VEICULO, "false"));
             kSession.insert(new Evidence(1.00, Evidence.COMBUSTIVEIS_FOSSEIS, "true"));
+            kSession.insert(new Evidence(0.00, Evidence.COMBUSTIVEIS_FOSSEIS, "false"));
+            kSession.insert(new Evidence(0.00, Evidence.MAIS_200KM, "true"));
+            kSession.insert(new Evidence(0.00, Evidence.MAIS_200KM, "false"));
+            kSession.insert(new Evidence(0.00, Evidence.CARREGAMENTO_DIÁRIO, "true"));
+            kSession.insert(new Evidence(0.00, Evidence.CARREGAMENTO_DIÁRIO, "false"));
+            kSession.insert(new Evidence(0.00, Evidence.PILOTO_AUTOMATICO, "true"));
+            kSession.insert(new Evidence(0.00, Evidence.PILOTO_AUTOMATICO, "false"));
             kSession.insert(new Evidence(0.60, Evidence.MEDIA_CONSUMO, "false"));
             kSession.insert(new Evidence(0.40, Evidence.MEDIA_CONSUMO, "true"));
             kSession.insert(new Evidence(1.00, Evidence.PERFORMANCE, "true")); // -> TIPO 7
+            kSession.insert(new Evidence(0.00, Evidence.PERFORMANCE, "false"));
             kSession.insert(new Evidence(1.00, Evidence.EMISSOES, "true")); // -> TIPO 5
+            kSession.insert(new Evidence(0.00, Evidence.EMISSOES, "false"));
             kSession.insert(new Evidence(0.60, Evidence.CARRO_VERSATIL, "true"));
-            kSession.insert(new Evidence(0.20, Evidence.CARRO_VERSATIL, "false"));
+            kSession.insert(new Evidence(1.00, Evidence.CARRO_VERSATIL, "false"));
             kSession.insert(new Evidence(0.20, Evidence.CARRO_FAMILIAR, "false"));
             kSession.insert(new Evidence(0.20, Evidence.CARRO_FAMILIAR, "true"));
             kSession.insert(new Evidence(0.70, Evidence.TIPO_SUV_OFF_ROAD, "false")); // -> TIPO 12
             kSession.insert(new Evidence(0.30, Evidence.TIPO_SUV_OFF_ROAD, "true")); // -> TIPO 13
             kSession.insert(new Evidence(1.00, Evidence.DESPORTIVO_2PORTAS, "true"));
+            kSession.insert(new Evidence(0.00, Evidence.DESPORTIVO_2PORTAS, "false"));
             kSession.insert(new Evidence(1.00, Evidence.DESPORTIVO_CABRIO, "false")); // -> TIPO 15
+            kSession.insert(new Evidence(0.00, Evidence.DESPORTIVO_CABRIO, "true"));
             kSession.insert(new Evidence(1.00, Evidence.FAMILIAR_7_LUGARES, "true")); // -> TIPO 17
+            kSession.insert(new Evidence(0.00, Evidence.FAMILIAR_7_LUGARES, "false"));
 
             kSession.fireAllRules();
             
