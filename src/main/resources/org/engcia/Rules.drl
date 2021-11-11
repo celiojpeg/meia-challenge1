@@ -108,149 +108,163 @@ rule "r9:Estado Veiculo Nao Relevante"
 lock-on-active true
 	when
 		Hypothesis( description == "mais_quilometragem", value == "true")
-		Evidence( description == "ESTADO_VEICULO", value == "false" )
+		Evidence( description == Evidence.ESTADO_VEICULO, value == "false" )
 	then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Conclusion.TIPO04, "true");
+        $h.update();
 		Conclusion c = new Conclusion(Conclusion.TIPO04);
 		insert(c);
 end
 
-rule "r10.Mais 10 Mil - Consumo"
+rule "r10:Mais 10 Mil - Consumo"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "prioridade_preco", value == "true")
-		Evidence( description == "QUAL_O_PRECO", value == "true" )
-		Evidence( description == "CONSUMO_PRIORITARIO", value == "true" )
+		Evidence( description == Evidence.QUAL_O_PRECO, value == "true" )
+		Evidence( description == Evidence.CONSUMO_PRIORITARIO, value == "true" )
 	then
 	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "prioridade_consumo", "true");
 	    $h.update();
 end
 
-rule "r11.Mais 10 Mil - Design"
+rule "r11:Mais 10 Mil - Design"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "prioridade_preco", value == "true")
-		Evidence( description == "QUAL_O_PRECO", value == "true" )
-		Evidence( description == "CONSUMO_PRIORITARIO", value == "false" )
+		Evidence( description == Evidence.QUAL_O_PRECO, value == "true" )
+		Evidence( description == Evidence.CONSUMO_PRIORITARIO, value == "false" )
 	then
 	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "prioridade_design", "true");
         $h.update();
 end
 
-rule "r12.Combustiveis Fosseis"
+rule "r12:Combustiveis Fosseis"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "prioridade_consumo", value == "true")
-		Evidence( description == "COMBUSTIVEIS_FOSSEIS", value == "true" )
+		Evidence( description == Evidence.COMBUSTIVEIS_FOSSEIS, value == "true" )
 	then
 		Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "combustiveis_fosseis", "true");
         $h.update();
 end
 
-rule "r13.Carro Eletrico"
+rule "r13:Carro Eletrico"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "prioridade_consumo", value == "true")
-		Evidence( description == "COMBUSTIVEIS_FOSSEIS", value == "false" )
+		Evidence( description == Evidence.COMBUSTIVEIS_FOSSEIS, value == "false" )
 	then
 		Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "carro_eletrico", "true");
         $h.update();
 end
 
-rule "r14.Carro Gasoleo"
+rule "r14:Carro Gasoleo"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "combustiveis_fosseis", value == "true")
-		Evidence( description == "MEDIA_CONSUMO", value == "true" )
+		Evidence( description == Evidence.MEDIA_CONSUMO, value == "true" )
 	then
 		Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "carro_gasoleo", "true");
         $h.update();
 end
 
-rule "r15.Carro Gasolina"
+rule "r15:Carro Gasolina"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "combustiveis_fosseis", value == "true")
-		Evidence( description == "MEDIA_CONSUMO", value == "false" )
+		Evidence( description == Evidence.MEDIA_CONSUMO, value == "false" )
 	then
 		Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, "carro_gasolina", "true");
         $h.update();
 end
 
-rule "r16.Emissoes Nao Relevantes"
+rule "r16:Emissoes Nao Relevantes"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "carro_gasoleo", value == "true")
-		Evidence( description == "EMISSOES", value == "true" )
+		Evidence( description == Evidence.EMISSOES, value == "true" )
 	then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Conclusion.TIPO05, "true");
+        $h.update();
         Conclusion c = new Conclusion(Conclusion.TIPO05);
         insert(c);
 end
 
-rule "r17.Emissoes Nao Relevantes"
+rule "r17:Emissoes Nao Relevantes"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "carro_gasoleo", value == "true")
-		Evidence( description == "EMISSOES", value == "false" )
+		Evidence( description == Evidence.EMISSOES", value == "false" )
 	then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Conclusion.TIPO06, "true");
+        $h.update();
         Conclusion c = new Conclusion(Conclusion.TIPO06);
         insert(c);
 end
 
-rule "r18.Performance Relevante"
+rule "r18:Performance Relevante"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "carro_gasolina", value == "true")
-		Evidence( description == "PERFORMANCE", value == "true" )
+		Evidence( description == Evidence.PERFORMANCE, value == "true" )
 	then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Conclusion.TIPO07, "true");
+        $h.update();
         Conclusion c = new Conclusion(Conclusion.TIPO07);
         insert(c);
 end
 
-rule "r19.Performance Nao Relevante"
+rule "r19:Performance Nao Relevante"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "carro_gasolina", value == "true")
-		Evidence( description == "PERFORMANCE", value == "false" )
+		Evidence( description == Evidence.PERFORMANCE, value == "false" )
 	then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Conclusion.TIPO08, "true");
+        $h.update();
         Conclusion c = new Conclusion(Conclusion.TIPO08);
         insert(c);
 end
 
-rule "r20.Carro Eletrico Mais 200km Diário - Piloto Automatico"
+rule "r20:Carro Eletrico Mais 200km Diário - Piloto Automatico"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "carro_eletrico", value == "true")
-		Evidence( description == "MAIS_200KM", value == "true" )
-		Evidence( description == "PILOTO_AUTOMATICO", value == "true" )
+		Evidence( description == Evidence.MAIS_200KM, value == "true" )
+		Evidence( description == Evidence.PILOTO_AUTOMATICO, value == "true" )
 	then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Conclusion.TIPO10, "true");
+        $h.update();
         Conclusion c = new Conclusion(Conclusion.TIPO10);
         insert(c);
 end
 
-rule "r21.Carro Eletrico Mais 200km Diário - Piloto Automatico"
+rule "r21:Carro Eletrico Mais 200km Diário - Piloto Automatico"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "carro_eletrico", value == "true")
-		Evidence( description == "MAIS_200KM", value == "true" )
-		Evidence( description == "PILOTO_AUTOMATICO", value == "false" )
+		Evidence( description == Evidence.MAIS_200KM, value == "true" )
+		Evidence( description == Evidence.PILOTO_AUTOMATICO, value == "false" )
 	then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Conclusion.TIPO11, "true");
+        $h.update();
         Conclusion c = new Conclusion(Conclusion.TIPO11);
         insert(c);
 end
 
-rule "r22.Carro Eletrico Menos 200km Diário - Sem Carregamento Diario"
+rule "r22:Carro Eletrico Menos 200km Diário - Sem Carregamento Diario"
 @CF(1.00)
 lock-on-active true
 	when
@@ -258,19 +272,23 @@ lock-on-active true
 		Evidence( description == "MAIS_200KM", value == "false" )
 		Evidence( description == "CARREGAMENTO_DIÁRIO", value == "false" )
 	then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Conclusion.TIPO09, "true");
+        $h.update();
         Conclusion c = new Conclusion(Conclusion.TIPO09);
         insert(c);
 end
 
-rule "r22.Carro Eletrico Menos 200km Diário - Sem Carregamento Diario - Piloto Automatico"
+rule "r23:Carro Eletrico Menos 200km Diário - Sem Carregamento Diario - Piloto Automatico"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == "carro_eletrico", value == "true")
-		Evidence( description == "MAIS_200KM", value == "false" )
-		Evidence( description == "CARREGAMENTO_DIÁRIO", value == "true" )
-		Evidence( description == "PILOTO_AUTOMATICO", value == "true" )
+		Evidence( description == Evidence.MAIS_200KM, value == "false" )
+		Evidence( description == Evidence.CARREGAMENTO_DIÁRIO, value == "true" )
+		Evidence( description == Evidence.PILOTO_AUTOMATICO, value == "true" )
 	then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Conclusion.TIPO10, "true");
+        $h.update();
         Conclusion c = new Conclusion(Conclusion.TIPO10);
         insert(c);
 end
@@ -280,10 +298,12 @@ rule "r23.Carro Eletrico Menos 200km Diário - Sem Carregamento Diario -  Sem Pi
 lock-on-active true
 	when
 		Hypothesis( description == "carro_eletrico", value == "true")
-		Evidence( description == "MAIS_200KM", value == "false" )
-		Evidence( description == "CARREGAMENTO_DIÁRIO", value == "true" )
-		Evidence( description == "PILOTO_AUTOMATICO", value == "false" )
+		Evidence( description == Evidence.MAIS_200KM, value == "false" )
+		Evidence( description == Evidence.CARREGAMENTO_DIÁRIO, value == "true" )
+		Evidence( description == Evidence.PILOTO_AUTOMATICO, value == "false" )
 	then
+	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Conclusion.TIPO11, "true");
+        $h.update();
         Conclusion c = new Conclusion(Conclusion.TIPO11);
         insert(c);
 end
