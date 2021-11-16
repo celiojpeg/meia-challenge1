@@ -1,10 +1,10 @@
 package org.engcia.meiaChallenge1Team4.model;
 
 public class Car {
-    private String brand;
-    private String model;
-    private String year;
-    private String link;
+    private final String brand;
+    private final String model;
+    private final String year;
+    private final String link;
 
     public Car(String brand, String model, String year, String link) {
         this.brand = brand;
