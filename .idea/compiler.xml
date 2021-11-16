@@ -6,8 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Haemorrhage" />
         <module name="meia-challenge1" />
+        <module name="MEIA Challenge 1 - Team 4" />
       </profile>
     </annotationProcessing>
   </component>

@@ -1,9 +1,7 @@
-package org.engcia.cf.model;
+package org.engcia.meiaChallenge1Team4.model;
 
 import org.kie.api.runtime.rule.FactHandle;
-import org.engcia.cf.listeners.TrackingAgendaListener;
-
-import javax.xml.bind.SchemaOutputResolver;
+import org.engcia.meiaChallenge1Team4.listeners.TrackingAgendaListener;
 
 public class FactCF implements Comparable<FactCF>, Uncertainty {
 	private double cf;

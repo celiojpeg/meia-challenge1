@@ -1,15 +1,15 @@
 package org.engcia.cfsample;
 
 //import org.drools.core.rule.builder.dialect.asm.ClassGenerator;
-import org.engcia.cf.model.Conclusion;
+import org.engcia.meiaChallenge1Team4.model.Conclusion;
 import org.kie.api.KieServices;
 //import org.kie.api.event.rule.RuleRuntimeEventListener;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
-import org.engcia.cf.listeners.TrackingAgendaListener;
-import org.engcia.cf.model.Hypothesis;
-import org.engcia.cf.model.Evidence;
-import org.engcia.cf.listeners.FactListener;
+import org.engcia.meiaChallenge1Team4.listeners.TrackingAgendaListener;
+import org.engcia.meiaChallenge1Team4.model.Hypothesis;
+import org.engcia.meiaChallenge1Team4.model.Evidence;
+import org.engcia.meiaChallenge1Team4.listeners.FactListener;
 
 
 /**

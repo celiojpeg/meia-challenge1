@@ -1,4 +1,4 @@
-package org.engcia.cf.model;
+package org.engcia.meiaChallenge1Team4.model;
 
 public class Car {
     private String brand;

@@ -1,4 +1,4 @@
-package org.engcia.cf.listeners;
+package org.engcia.meiaChallenge1Team4.listeners;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,7 +18,7 @@ import org.kie.api.event.rule.RuleFlowGroupDeactivatedEvent;
 import org.kie.api.runtime.ClassObjectFilter;
 import org.kie.api.runtime.KieSession;
 //import org.kie.api.runtime.rule.FactHandle;
-import org.engcia.cf.model.FactCF;
+import org.engcia.meiaChallenge1Team4.model.FactCF;
 
 public class TrackingAgendaListener implements AgendaEventListener {
 	private static KieSession kieSession;

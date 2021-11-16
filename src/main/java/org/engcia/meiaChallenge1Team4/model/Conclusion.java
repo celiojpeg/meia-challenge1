@@ -1,6 +1,4 @@
-package org.engcia.cf.model;
-
-import javax.swing.*;
+package org.engcia.meiaChallenge1Team4.model;
 
 public class Conclusion extends FactCF{
     public static final String TIPO01 = "Categoria de carros tipo 01";

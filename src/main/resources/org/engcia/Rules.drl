@@ -1,10 +1,10 @@
 package org.engcia
  
-import org.engcia.cf.model.FactCF;
-import org.engcia.cf.model.Evidence;
-import org.engcia.cf.model.Hypothesis;
-import org.engcia.cf.listeners.TrackingAgendaListener
-import org.engcia.cf.model.Conclusion;
+import org.engcia.meiaChallenge1Team4.model.FactCF;
+import org.engcia.meiaChallenge1Team4.model.Evidence;
+import org.engcia.meiaChallenge1Team4.model.Hypothesis;
+import org.engcia.meiaChallenge1Team4.listeners.TrackingAgendaListener
+import org.engcia.meiaChallenge1Team4.model.Conclusion;
 
 //PROJETO
 
