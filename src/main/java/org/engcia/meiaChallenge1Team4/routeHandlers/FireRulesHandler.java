@@ -5,6 +5,7 @@ import fi.iki.elonen.NanoHTTPD.*;
 import fi.iki.elonen.router.RouterNanoHTTPD.*;
 import org.engcia.meiaChallenge1Team4.listeners.FactListener;
 import org.engcia.meiaChallenge1Team4.listeners.TrackingAgendaListener;
+import org.engcia.meiaChallenge1Team4.model.Car;
 import org.engcia.meiaChallenge1Team4.model.Conclusion;
 import org.engcia.meiaChallenge1Team4.model.Evidence;
 import org.engcia.meiaChallenge1Team4.model.Hypothesis;
@@ -16,6 +17,7 @@ import org.kie.api.runtime.KieSession;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FireRulesHandler extends DefaultHandler{
@@ -47,9 +49,7 @@ public class FireRulesHandler extends DefaultHandler{
         final HashMap<String, String> map = new HashMap<String, String>();
         try {
             session.parseBody(map);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ResponseException e) {
+        } catch (IOException | ResponseException e) {
             e.printStackTrace();
         }
 
@@ -87,7 +87,8 @@ public class FireRulesHandler extends DefaultHandler{
             kSession.insert(new Hypothesis(0.00, Hypothesis.FAMILIAR_7LUGARES));
             kSession.insert(new Hypothesis(0.00, Hypothesis.DESPORTIVO_2PORTAS));
             kSession.insert(new Hypothesis(0.00, Hypothesis.DESPORTIVO_45PORTAS));
-            kSession.insert(new Conclusion(0.00, Conclusion.TIPO01));
+
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO01, Car.getCarsForConclusion(Conclusion.TIPO01)));
             kSession.insert(new Conclusion(0.00, Conclusion.TIPO02));
             kSession.insert(new Conclusion(0.00, Conclusion.TIPO03));
             kSession.insert(new Conclusion(0.00, Conclusion.TIPO04));
