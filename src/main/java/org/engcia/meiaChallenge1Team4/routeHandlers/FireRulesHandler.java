@@ -89,23 +89,23 @@ public class FireRulesHandler extends DefaultHandler{
             kSession.insert(new Hypothesis(0.00, Hypothesis.DESPORTIVO_45PORTAS));
 
             kSession.insert(new Conclusion(0.00, Conclusion.TIPO01, Car.getCarsForConclusion(Conclusion.TIPO01)));
-            kSession.insert(new Conclusion(0.00, Conclusion.TIPO02));
-            kSession.insert(new Conclusion(0.00, Conclusion.TIPO03));
-            kSession.insert(new Conclusion(0.00, Conclusion.TIPO04));
-            kSession.insert(new Conclusion(0.00, Conclusion.TIPO05));
-            kSession.insert(new Conclusion(0.00, Conclusion.TIPO06));
-            kSession.insert(new Conclusion(0.00, Conclusion.TIPO07));
-            kSession.insert(new Conclusion(0.00, Conclusion.TIPO08));
-            kSession.insert(new Conclusion(0.00, Conclusion.TIPO09));
-            kSession.insert(new Conclusion(0.00, Conclusion.TIPO10));
-            kSession.insert(new Conclusion(0.00, Conclusion.TIPO11));
-            kSession.insert(new Conclusion(0.00, Conclusion.TIPO12));
-            kSession.insert(new Conclusion(0.00, Conclusion.TIPO13));
-            kSession.insert(new Conclusion(0.00, Conclusion.TIPO14));
-            kSession.insert(new Conclusion(0.00, Conclusion.TIPO15));
-            kSession.insert(new Conclusion(0.00, Conclusion.TIPO16));
-            kSession.insert(new Conclusion(0.00, Conclusion.TIPO17));
-            kSession.insert(new Conclusion(0.00, Conclusion.TIPO18));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO02, Car.getCarsForConclusion(Conclusion.TIPO02)));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO03, Car.getCarsForConclusion(Conclusion.TIPO03)));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO04, Car.getCarsForConclusion(Conclusion.TIPO04)));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO05, Car.getCarsForConclusion(Conclusion.TIPO05)));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO06, Car.getCarsForConclusion(Conclusion.TIPO06)));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO07, Car.getCarsForConclusion(Conclusion.TIPO07)));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO08, Car.getCarsForConclusion(Conclusion.TIPO08)));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO09, Car.getCarsForConclusion(Conclusion.TIPO09)));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO10, Car.getCarsForConclusion(Conclusion.TIPO10)));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO11, Car.getCarsForConclusion(Conclusion.TIPO11)));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO12, Car.getCarsForConclusion(Conclusion.TIPO12)));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO13, Car.getCarsForConclusion(Conclusion.TIPO13)));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO14, Car.getCarsForConclusion(Conclusion.TIPO14)));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO15, Car.getCarsForConclusion(Conclusion.TIPO15)));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO16, Car.getCarsForConclusion(Conclusion.TIPO16)));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO17, Car.getCarsForConclusion(Conclusion.TIPO17)));
+            kSession.insert(new Conclusion(0.00, Conclusion.TIPO18, Car.getCarsForConclusion(Conclusion.TIPO18)));
 
             for (Evidence evidence : evidences) {
                 kSession.insert(evidence);

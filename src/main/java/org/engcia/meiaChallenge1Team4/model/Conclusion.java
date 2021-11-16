@@ -1,5 +1,7 @@
 package org.engcia.meiaChallenge1Team4.model;
 
+import java.util.ArrayList;
+
 public class Conclusion extends FactCF{
     public static final String TIPO01 = "Categoria de carros tipo 01";
     public static final String TIPO02 = "Categoria de carros tipo 02";
@@ -20,13 +22,17 @@ public class Conclusion extends FactCF{
     public static final String TIPO17 = "Categoria de carros tipo 17";
     public static final String TIPO18 = "Categoria de carros tipo 18";
 
+    private ArrayList<Car> listCars;
 
-
-    public Conclusion(double cf, String description) {
+    public Conclusion(double cf, String description, ArrayList<Car> listCars) {
         super(cf,description,"true");
+        this.listCars = listCars;
     }
 
     public String toString() {
+/*        for (int i = 0; i < listCars.size(); i++) {
+            System.out.println(listCars.get(i).toString());
+        }*/
         return super.toString();
     }
 
