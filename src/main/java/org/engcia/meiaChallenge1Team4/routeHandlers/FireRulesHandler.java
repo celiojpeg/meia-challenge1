@@ -9,17 +9,28 @@ import org.engcia.meiaChallenge1Team4.model.Conclusion;
 import org.engcia.meiaChallenge1Team4.model.Evidence;
 import org.engcia.meiaChallenge1Team4.model.Hypothesis;
 import org.kie.api.KieServices;
+import org.kie.api.runtime.ClassObjectFilter;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FireRulesHandler extends DefaultHandler{
+    private Conclusion[] conclusions;
+    private final Gson gson;
+
+    public FireRulesHandler() {
+        super();
+        conclusions = new Conclusion[0];
+        gson = new Gson();
+    }
+
     @Override
     public String getText() {
-        return "not implemented";
+        return gson.toJson(conclusions);
     }
 
     @Override
@@ -43,8 +54,6 @@ public class FireRulesHandler extends DefaultHandler{
         }
 
         final String json = map.get("postData");
-        Gson gson = new Gson();
-
         Evidence[] evidences = gson.fromJson(json, Evidence[].class);
 
 
@@ -102,6 +111,10 @@ public class FireRulesHandler extends DefaultHandler{
             }
 
             kSession.fireAllRules();
+
+            Collection<Conclusion> resultConclusions = (Collection<Conclusion>) kSession.getObjects( new ClassObjectFilter(Conclusion.class) );
+
+            conclusions = resultConclusions.toArray(new Conclusion[0]);
         } catch (Throwable t) {
             t.printStackTrace();
         }
