@@ -249,8 +249,8 @@ rule "r22:Carro Eletrico Menos 200km Diário - Sem Carregamento Diario"
 lock-on-active true
 	when
 		Hypothesis( description == Hypothesis.CARRO_ELETRICO, value == "true")
-		Evidence( description == "MAIS_200KM", value == "false" )
-		Evidence( description == "CARREGAMENTO_DIÁRIO", value == "false" )
+		Evidence( description == Evidence.MAIS_200KM, value == "false" )
+		Evidence( description == Evidence.CARREGAMENTO_DIÁRIO, value == "false" )
 	then
 	    Conclusion $c = (Conclusion)TrackingAgendaListener.getFactRef(Conclusion.class, Conclusion.TIPO09, "true");
         $c.update();
