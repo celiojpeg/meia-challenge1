@@ -22,7 +22,7 @@ rule "r2:Consumo Prioritário"
 @CF(1.00)
 lock-on-active true
 when
-	Evidence( description == Evidence.PRECO_PRIORITARIO, value == "false" )
+	//Evidence( description == Evidence.PRECO_PRIORITARIO, value == "false" )
 	Evidence( description == Evidence.CONSUMO_PRIORITARIO, value == "true" )
 then
 	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Hypothesis.PRIORIDADE_CONSUMO, "true");
@@ -113,7 +113,7 @@ rule "r10:Mais 10 Mil - Consumo"
 lock-on-active true
 	when
 		Hypothesis( description == Hypothesis.PRIORIDADE_PRECO, value == "true")
-		Evidence( description == Evidence.QUAL_O_PRECO, value == "true" )
+		//Evidence( description == Evidence.QUAL_O_PRECO, value == "true" )
 		Evidence( description == Evidence.CONSUMO_PRIORITARIO, value == "true" )
 	then
 	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Hypothesis.PRIORIDADE_CONSUMO, "true");
@@ -125,7 +125,7 @@ rule "r11:Mais 10 Mil - Design"
 lock-on-active true
 	when
 		Hypothesis( description == Hypothesis.PRIORIDADE_PRECO, value == "true")
-		Evidence( description == Evidence.QUAL_O_PRECO, value == "true" )
+		//Evidence( description == Evidence.QUAL_O_PRECO, value == "true" )
 		Evidence( description == Evidence.CONSUMO_PRIORITARIO, value == "false" )
 	then
 	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Hypothesis.PRIORIDADE_DESIGN, "true");
@@ -298,7 +298,7 @@ rule "r26:Carro Desportivo"
 lock-on-active true
     when
 	    Hypothesis( description == Hypothesis.PRIORIDADE_DESIGN, value == "true")
-	    Evidence( description == Evidence.CARRO_VERSATIL, value == "false" )
+	    //Evidence( description == Evidence.CARRO_VERSATIL, value == "false" )
 	    Evidence( description == Evidence.CARRO_FAMILIAR, value == "false" )
 
     then
@@ -311,7 +311,7 @@ rule "r27:Carro Familiar"
 lock-on-active true
     when
 	    Hypothesis( description == Hypothesis.PRIORIDADE_DESIGN, value == "true")
-	    Evidence( description == Evidence.CARRO_VERSATIL, value == "false" )
+	    //Evidence( description == Evidence.CARRO_VERSATIL, value == "false" )
 	    Evidence( description == Evidence.CARRO_FAMILIAR, value == "true" )
 
     then
