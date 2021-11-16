@@ -33,7 +33,7 @@ rule "r3:Design Prioritário"
 @CF(1.00)
 lock-on-active true
 when
-    Evidence( description == Evidence.PRECO_PRIORITARIO, value == "false" )
+    //Evidence( description == Evidence.PRECO_PRIORITARIO, value == "false" )
 	Evidence( description == Evidence.CONSUMO_PRIORITARIO, value == "false" )
 then
 	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Hypothesis.PRIORIDADE_DESIGN, "true");
