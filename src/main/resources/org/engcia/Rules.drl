@@ -232,7 +232,7 @@ lock-on-active true
         $c.update();
 end
 
-rule "r21:Carro Eletrico Mais 200km Diário - Piloto Automatico"
+/*rule "r21:Carro Eletrico Mais 200km Diário - Piloto Automatico"
 @CF(1.00)
 lock-on-active true
 	when
@@ -254,7 +254,7 @@ lock-on-active true
 	then
 	    Conclusion $c = (Conclusion)TrackingAgendaListener.getFactRef(Conclusion.class, Conclusion.TIPO09, "true");
         $c.update();
-end
+end*/
 
 rule "r23:Carro Eletrico Menos 200km Diário - Sem Carregamento Diario - Piloto Automatico"
 @CF(1.00)
