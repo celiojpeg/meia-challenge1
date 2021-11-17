@@ -107,7 +107,7 @@ lock-on-active true
 	    Conclusion $c = (Conclusion)TrackingAgendaListener.getFactRef(Conclusion.class, Conclusion.TIPO04, "true");
         $c.update();
 end
-
+/*
 rule "r10:Mais 10 Mil - Consumo"
 @CF(1.00)
 lock-on-active true
@@ -131,7 +131,7 @@ lock-on-active true
 	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Hypothesis.PRIORIDADE_DESIGN, "true");
         $h.update();
 end
-
+*/
 rule "r12:Combustiveis Fosseis"
 @CF(1.00)
 lock-on-active true
@@ -383,7 +383,7 @@ rule "r33:Desportivo Cabrio"
 lock-on-active true
     when
 	    Hypothesis( description == Hypothesis.PERFIL_DESPORTIVO, value == "true")
-	    Evidence( description == "DESPORTIVO_CABRIO", value == "true" )
+	    Evidence( description == Evidence.DESPORTIVO_CABRIO, value == "true" )
     then
     	Conclusion $c = (Conclusion)TrackingAgendaListener.getFactRef(Conclusion.class, Conclusion.TIPO14, "true");
 	    $c.update();
