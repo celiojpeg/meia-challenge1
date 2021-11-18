@@ -101,8 +101,6 @@ public class DroolsTest {
             kSession.insert(new Evidence(-1.00, Evidence.COMBUSTIVEIS_FOSSEIS, "false"));
             kSession.insert(new Evidence(-1.00, Evidence.MAIS_200KM, "true"));
             kSession.insert(new Evidence(-1.00, Evidence.MAIS_200KM, "false"));
-            kSession.insert(new Evidence(-1.00, Evidence.CARREGAMENTO_DIÁRIO, "true"));
-            kSession.insert(new Evidence(-1.00, Evidence.CARREGAMENTO_DIÁRIO, "false"));
             kSession.insert(new Evidence(-1.00, Evidence.PILOTO_AUTOMATICO, "true"));
             kSession.insert(new Evidence(-1.00, Evidence.PILOTO_AUTOMATICO, "false"));
             kSession.insert(new Evidence(0.20, Evidence.MEDIA_CONSUMO, "false"));

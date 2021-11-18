@@ -22,7 +22,6 @@ rule "r2:Consumo Prioritário"
 @CF(1.00)
 lock-on-active true
 when
-	//Evidence( description == Evidence.PRECO_PRIORITARIO, value == "false" )
 	Evidence( description == Evidence.CONSUMO_PRIORITARIO, value == "true" )
 then
 	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Hypothesis.PRIORIDADE_CONSUMO, "true");
@@ -33,7 +32,6 @@ rule "r3:Design Prioritário"
 @CF(1.00)
 lock-on-active true
 when
-    //Evidence( description == Evidence.PRECO_PRIORITARIO, value == "false" )
 	Evidence( description == Evidence.CONSUMO_PRIORITARIO, value == "false" )
 then
 	Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Hypothesis.PRIORIDADE_DESIGN, "true");
@@ -107,32 +105,8 @@ lock-on-active true
 	    Conclusion $c = (Conclusion)TrackingAgendaListener.getFactRef(Conclusion.class, Conclusion.TIPO04, "true");
         $c.update();
 end
-/*
-rule "r10:Mais 10 Mil - Consumo"
-@CF(1.00)
-lock-on-active true
-	when
-		Hypothesis( description == Hypothesis.PRIORIDADE_PRECO, value == "true")
-		//Evidence( description == Evidence.QUAL_O_PRECO, value == "true" )
-		Evidence( description == Evidence.CONSUMO_PRIORITARIO, value == "true" )
-	then
-	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Hypothesis.PRIORIDADE_CONSUMO, "true");
-	    $h.update();
-end
 
-rule "r11:Mais 10 Mil - Design"
-@CF(1.00)
-lock-on-active true
-	when
-		Hypothesis( description == Hypothesis.PRIORIDADE_PRECO, value == "true")
-		//Evidence( description == Evidence.QUAL_O_PRECO, value == "true" )
-		Evidence( description == Evidence.CONSUMO_PRIORITARIO, value == "false" )
-	then
-	    Hypothesis $h = (Hypothesis)TrackingAgendaListener.getFactRef(Hypothesis.class, Hypothesis.PRIORIDADE_DESIGN, "true");
-        $h.update();
-end
-*/
-rule "r12:Combustiveis Fosseis"
+rule "r10:Combustiveis Fosseis"
 @CF(1.00)
 lock-on-active true
 	when
@@ -143,7 +117,7 @@ lock-on-active true
         $h.update();
 end
 
-rule "r13:Carro Eletrico"
+rule "r11:Carro Eletrico"
 @CF(1.00)
 lock-on-active true
 	when
@@ -154,7 +128,7 @@ lock-on-active true
         $h.update();
 end
 
-rule "r14:Carro Gasoleo"
+rule "r12:Carro Gasoleo"
 @CF(1.00)
 lock-on-active true
 	when
@@ -165,7 +139,7 @@ lock-on-active true
         $h.update();
 end
 
-rule "r15:Carro Gasolina"
+rule "r13:Carro Gasolina"
 @CF(1.00)
 lock-on-active true
 	when
@@ -176,7 +150,7 @@ lock-on-active true
         $h.update();
 end
 
-rule "r16:Emissoes Nao Relevantes"
+rule "r14:Emissoes Nao Relevantes"
 @CF(1.00)
 lock-on-active true
 	when
@@ -187,7 +161,7 @@ lock-on-active true
         $c.update();
 end
 
-rule "r17:Emissoes Nao Relevantes"
+rule "r15:Emissoes Nao Relevantes"
 @CF(1.00)
 lock-on-active true
 	when
@@ -198,7 +172,7 @@ lock-on-active true
         $c.update();
 end
 
-rule "r18:Performance Relevante"
+rule "r16:Performance Relevante"
 @CF(1.00)
 lock-on-active true
 	when
@@ -209,7 +183,7 @@ lock-on-active true
         $c.update();
 end
 
-rule "r19:Performance Nao Relevante"
+rule "17:Performance Nao Relevante"
 @CF(1.00)
 lock-on-active true
 	when
@@ -220,69 +194,43 @@ lock-on-active true
         $c.update();
 end
 
+rule "r18:Carro Eletrico Menos 200km "
+@CF(1.00)
+lock-on-active true
+	when
+		Hypothesis( description == Hypothesis.CARRO_ELETRICO, value == "true")
+		Evidence( description == Evidence.MAIS_200KM, value == "false" )
+	then
+	    Conclusion $c = (Conclusion)TrackingAgendaListener.getFactRef(Conclusion.class, Conclusion.TIPO09, "true");
+        $c.update();
+end
+
+rule "r19:Carro Eletrico Mais 200km Diário - Piloto Automatico"
+@CF(1.00)
+lock-on-active true
+	when
+		Hypothesis( description == Hypothesis.CARRO_ELETRICO, value == "true")
+		Evidence( description == Evidence.MAIS_200KM, value == "true" )
+		Evidence( description == Evidence.PILOTO_AUTOMATICO, value == "true" )
+	then
+	    Conclusion $c = (Conclusion)TrackingAgendaListener.getFactRef(Conclusion.class, Conclusion.TIPO10, "true");
+        $c.update();
+end
+
 rule "r20:Carro Eletrico Mais 200km Diário - Piloto Automatico"
 @CF(1.00)
 lock-on-active true
 	when
 		Hypothesis( description == Hypothesis.CARRO_ELETRICO, value == "true")
 		Evidence( description == Evidence.MAIS_200KM, value == "true" )
-		Evidence( description == Evidence.PILOTO_AUTOMATICO, value == "true" )
-	then
-	    Conclusion $c = (Conclusion)TrackingAgendaListener.getFactRef(Conclusion.class, Conclusion.TIPO10, "true");
-        $c.update();
-end
-
-/*rule "r21:Carro Eletrico Mais 200km Diário - Piloto Automatico"
-@CF(1.00)
-lock-on-active true
-	when
-		Hypothesis( description == Hypothesis.CARRO_ELETRICO, value == "true")
-		Evidence( description == Evidence.MAIS_200KM, value == "true" )
 		Evidence( description == Evidence.PILOTO_AUTOMATICO, value == "false" )
 	then
 	    Conclusion $c = (Conclusion)TrackingAgendaListener.getFactRef(Conclusion.class, Conclusion.TIPO11, "true");
         $c.update();
 end
 
-rule "r22:Carro Eletrico Menos 200km Diário - Sem Carregamento Diario"
-@CF(1.00)
-lock-on-active true
-	when
-		Hypothesis( description == Hypothesis.CARRO_ELETRICO, value == "true")
-		Evidence( description == Evidence.MAIS_200KM, value == "false" )
-		Evidence( description == Evidence.CARREGAMENTO_DIÁRIO, value == "false" )
-	then
-	    Conclusion $c = (Conclusion)TrackingAgendaListener.getFactRef(Conclusion.class, Conclusion.TIPO09, "true");
-        $c.update();
-end*/
 
-rule "r23:Carro Eletrico Menos 200km Diário - Sem Carregamento Diario - Piloto Automatico"
-@CF(1.00)
-lock-on-active true
-	when
-		Hypothesis( description == Hypothesis.CARRO_ELETRICO, value == "true")
-		Evidence( description == Evidence.MAIS_200KM, value == "false" )
-		Evidence( description == Evidence.CARREGAMENTO_DIÁRIO, value == "true" )
-		Evidence( description == Evidence.PILOTO_AUTOMATICO, value == "true" )
-	then
-	    Conclusion $c = (Conclusion)TrackingAgendaListener.getFactRef(Conclusion.class, Conclusion.TIPO10, "true");
-        $c.update();
-end
-
-rule "r24:Carro Eletrico Menos 200km Diário - Sem Carregamento Diario -  Sem Piloto Automatico"
-@CF(1.00)
-lock-on-active true
-	when
-		Hypothesis( description == Hypothesis.CARRO_ELETRICO, value == "true")
-		Evidence( description == Evidence.MAIS_200KM, value == "false" )
-		Evidence( description == Evidence.CARREGAMENTO_DIÁRIO, value == "true" )
-		Evidence( description == Evidence.PILOTO_AUTOMATICO, value == "false" )
-	then
-	    Conclusion $c = (Conclusion)TrackingAgendaListener.getFactRef(Conclusion.class, Conclusion.TIPO11, "true");
-        $c.update();
-end
-
-rule "r25:Carro Versatil"
+rule "r21:Carro Versatil"
 @CF(1.00)
 lock-on-active true
     when
@@ -293,7 +241,7 @@ lock-on-active true
 	    $h.update();
 end
 
-rule "r26:Carro Desportivo"
+rule "r22:Carro Desportivo"
 @CF(1.00)
 lock-on-active true
     when
@@ -306,7 +254,7 @@ lock-on-active true
 	    $h.update();
 end
 
-rule "r27:Carro Familiar"
+rule "r23:Carro Familiar"
 @CF(1.00)
 lock-on-active true
     when
@@ -319,7 +267,7 @@ lock-on-active true
 	    $h.update();
 end
 
-rule "r28:SUV Off Road"
+rule "r24:SUV Off Road"
 @CF(1.00)
 lock-on-active true
     when
@@ -330,7 +278,7 @@ lock-on-active true
 	    $c.update();
 end
 
-rule "r29:SUV On Road"
+rule "r25:SUV On Road"
 @CF(1.00)
 lock-on-active true
     when
@@ -341,7 +289,7 @@ lock-on-active true
 	    $c.update();
 end
 
-rule "r30:Familiar 7 Lugares"
+rule "r26:Familiar 7 Lugares"
 @CF(1.00)
 lock-on-active true
     when
@@ -354,7 +302,7 @@ lock-on-active true
 	    $c.update();
 end
 
-rule "r31:Familiar 4-5 Lugares"
+rule "r27:Familiar 4-5 Lugares"
 @CF(1.00)
 lock-on-active true
     when
@@ -367,7 +315,7 @@ lock-on-active true
 	    $c.update();
 end
 
-rule "r32:Desportivo 2 portas"
+rule "r28:Desportivo 2 portas"
 @CF(1.00)
 lock-on-active true
     when
@@ -378,7 +326,7 @@ lock-on-active true
 	    $h.update();
 end
 
-rule "r33:Desportivo Cabrio"
+rule "r29:Desportivo Cabrio"
 @CF(1.00)
 lock-on-active true
     when
@@ -389,7 +337,7 @@ lock-on-active true
 	    $c.update();
 end
 
-rule "r34:Desportivo Cabrio"
+rule "r30:Desportivo Cabrio"
 @CF(1.00)
 lock-on-active true
     when
@@ -400,7 +348,7 @@ lock-on-active true
 	    $c.update();
 end
 
-rule "r35:Desportivo 4-5 Portas"
+rule "r31:Desportivo 4-5 Portas"
 @CF(1.00)
 lock-on-active true
     when

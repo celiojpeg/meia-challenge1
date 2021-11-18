@@ -13,7 +13,6 @@ public class Evidence extends FactCF{
 	public static final String MAIS_200KM = "Irá realizar mais de 200 quilometros diários";
 	public static final String EMISSOES	= "O consumo de emissões é um fator relevante";
 	public static final String PERFORMANCE = "A performance do veículo é relevante";
-	public static final String CARREGAMENTO_DIÁRIO = "Tem a possibilidade de efatuar um carregamento diário";
 	public static final String PILOTO_AUTOMATICO = "Quer introduzir modo de piloto automático";
 	public static final String CARRO_VERSATIL = "Dá preferência a um carro versátil a um familiar";
 	public static final String CARRO_FAMILIAR = "Dá preferência a um carro familiar a um desportivo";
