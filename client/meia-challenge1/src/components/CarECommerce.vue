@@ -218,7 +218,7 @@
                   role="button"
                   :aria-controls="`conclusion-${index}`"
                 >
-                  {{ conclusion.description }} -
+                  {{ conclusion.description }} |
                   <span :class="getCFColor(conclusion.cf)"
                     >Certeza: {{ getCFLabel(conclusion.cf) }}</span
                   >

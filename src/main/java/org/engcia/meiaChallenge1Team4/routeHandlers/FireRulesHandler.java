@@ -118,6 +118,8 @@ public class FireRulesHandler extends DefaultHandler{
             Collection<Conclusion> resultConclusions = (Collection<Conclusion>) kSession.getObjects( new ClassObjectFilter(Conclusion.class) );
 
             conclusions = resultConclusions.toArray(new Conclusion[0]);
+
+            kSession.destroy();
         } catch (Throwable t) {
             t.printStackTrace();
         }

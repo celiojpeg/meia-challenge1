@@ -12,7 +12,7 @@ public class App extends RouterNanoHTTPD {
         super(8081);
         addMappings();
         start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
-        System.out.println("\nRunning! Point your browsers to http://localhost:8081/ \n");
+        System.out.println("\nRunning! http://localhost:8081/ \n");
     }
 
     public static void main(String[] args ) throws IOException {
