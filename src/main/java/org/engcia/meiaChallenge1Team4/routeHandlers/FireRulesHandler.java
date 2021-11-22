@@ -2,6 +2,7 @@ package org.engcia.meiaChallenge1Team4.routeHandlers;
 
 import com.google.gson.Gson;
 import fi.iki.elonen.NanoHTTPD.*;
+import fi.iki.elonen.router.RouterNanoHTTPD;
 import fi.iki.elonen.router.RouterNanoHTTPD.*;
 import org.engcia.meiaChallenge1Team4.listeners.FactListener;
 import org.engcia.meiaChallenge1Team4.listeners.TrackingAgendaListener;
@@ -17,8 +18,9 @@ import org.kie.api.runtime.KieSession;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import static fi.iki.elonen.NanoHTTPD.newFixedLengthResponse;
 
 public class FireRulesHandler extends DefaultHandler{
     private Conclusion[] conclusions;
@@ -46,7 +48,7 @@ public class FireRulesHandler extends DefaultHandler{
     }
 
     public Response post(UriResource uriResource, Map<String, String> urlParams, IHTTPSession session) {
-        final HashMap<String, String> map = new HashMap<String, String>();
+        final HashMap<String, String> map = new HashMap<>();
         try {
             session.parseBody(map);
         } catch (IOException | ResponseException e) {
@@ -120,6 +122,18 @@ public class FireRulesHandler extends DefaultHandler{
             t.printStackTrace();
         }
 
-        return this.get(uriResource, urlParams, session);
+        Response response = this.get(uriResource, urlParams, session);
+        response.addHeader("Access-Control-Allow-Origin", "*");
+
+        return response;
+    }
+
+    public Response other(String method, RouterNanoHTTPD.UriResource uriResource, Map<String, String> urlParams, IHTTPSession session) {
+        Response response = newFixedLengthResponse("");
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Headers", "*");
+        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.addHeader("Access-Control-Max-Age", "86400");
+        return response;
     }
 }

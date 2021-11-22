@@ -24,140 +24,255 @@
       </b-progress>
     </section>
     <section class="mt-5">
-      <p class="is-size-5" v-if="'category' in questions[currentQuestion]">
-        {{ questions[currentQuestion].category }}
-      </p>
-      <p class="is-size-3 mb-4">{{ questions[currentQuestion].text }}</p>
-      <template v-if="!questions[currentQuestion].boolAnswer">
-        <div
-          v-for="(slider, index) in questions[currentQuestion].sliders"
-          :key="`slider-${index}`"
-          class="my-5 py-5"
-        >
-          <b-field :label="slider.text">
-            <b-slider
-              size="is-medium"
-              type="is-primary-dark"
-              :step="0.05"
-              :min="
-                'category' in questions[currentQuestion]
-                  ? -sliderLimits[questions[currentQuestion].category]
-                  : -1
-              "
-              :max="
-                'category' in questions[currentQuestion]
-                  ? sliderLimits[questions[currentQuestion].category]
-                  : 1
-              "
-              :tooltip="false"
-              v-model="slider.value"
-            >
-              <b-slider-tick
-                :value="
+      <template v-if="!finishedQuestions">
+        <p class="is-size-5" v-if="'category' in questions[currentQuestion]">
+          {{ questions[currentQuestion].category }}
+        </p>
+        <p class="is-size-3 mb-4">{{ questions[currentQuestion].text }}</p>
+        <template v-if="!questions[currentQuestion].boolAnswer">
+          <div
+            v-for="(slider, index) in questions[currentQuestion].sliders"
+            :key="`slider-${index}`"
+            class="my-5 py-5"
+          >
+            <b-field :label="slider.text">
+              <b-slider
+                size="is-medium"
+                type="is-primary-dark"
+                :step="
+                  'category' in questions[currentQuestion]
+                    ? 0.05 * sliderLimits[questions[currentQuestion].category]
+                    : 0.05
+                "
+                :min="
                   'category' in questions[currentQuestion]
                     ? -sliderLimits[questions[currentQuestion].category]
                     : -1
                 "
-                >Definitivamente não importante</b-slider-tick
-              >
-              <b-slider-tick
-                :value="
-                  'category' in questions[currentQuestion]
-                    ? -(0.8 * sliderLimits[questions[currentQuestion].category])
-                    : -0.8
-                "
-                >Quase certamente não importante</b-slider-tick
-              >
-              <b-slider-tick
-                :value="
-                  'category' in questions[currentQuestion]
-                    ? -(0.6 * sliderLimits[questions[currentQuestion].category])
-                    : -0.6
-                "
-                >Provavelmente não importante</b-slider-tick
-              >
-              <b-slider-tick
-                :value="
-                  'category' in questions[currentQuestion]
-                    ? -(0.4 * sliderLimits[questions[currentQuestion].category])
-                    : -0.4
-                "
-                >Talvez não importante</b-slider-tick
-              >
-              <b-slider-tick :value="0.0">Não sei</b-slider-tick>
-              <b-slider-tick
-                :value="
-                  'category' in questions[currentQuestion]
-                    ? 0.4 * sliderLimits[questions[currentQuestion].category]
-                    : 0.4
-                "
-                >Talvez importante</b-slider-tick
-              >
-              <b-slider-tick
-                :value="
-                  'category' in questions[currentQuestion]
-                    ? 0.6 * sliderLimits[questions[currentQuestion].category]
-                    : 0.6
-                "
-                >Provavelmente importante</b-slider-tick
-              >
-              <b-slider-tick
-                :value="
-                  'category' in questions[currentQuestion]
-                    ? 0.8 * sliderLimits[questions[currentQuestion].category]
-                    : 0.8
-                "
-                >Quase certamente importante</b-slider-tick
-              >
-              <b-slider-tick
-                :value="
+                :max="
                   'category' in questions[currentQuestion]
                     ? sliderLimits[questions[currentQuestion].category]
                     : 1
                 "
-                >Definitivamente importante</b-slider-tick
+                :tooltip="false"
+                v-model="slider.value"
               >
-            </b-slider>
+                <b-slider-tick
+                  :value="
+                    'category' in questions[currentQuestion]
+                      ? -sliderLimits[questions[currentQuestion].category]
+                      : -1
+                  "
+                  >Definitivamente não importante</b-slider-tick
+                >
+                <b-slider-tick
+                  :value="
+                    'category' in questions[currentQuestion]
+                      ? -(
+                          0.8 *
+                          sliderLimits[questions[currentQuestion].category]
+                        )
+                      : -0.8
+                  "
+                  >Quase certamente não importante</b-slider-tick
+                >
+                <b-slider-tick
+                  :value="
+                    'category' in questions[currentQuestion]
+                      ? -(
+                          0.6 *
+                          sliderLimits[questions[currentQuestion].category]
+                        )
+                      : -0.6
+                  "
+                  >Provavelmente não importante</b-slider-tick
+                >
+                <b-slider-tick
+                  :value="
+                    'category' in questions[currentQuestion]
+                      ? -(
+                          0.4 *
+                          sliderLimits[questions[currentQuestion].category]
+                        )
+                      : -0.4
+                  "
+                  >Talvez não importante</b-slider-tick
+                >
+                <b-slider-tick :value="0.0">Não sei</b-slider-tick>
+                <b-slider-tick
+                  :value="
+                    'category' in questions[currentQuestion]
+                      ? 0.4 * sliderLimits[questions[currentQuestion].category]
+                      : 0.4
+                  "
+                  >Talvez importante</b-slider-tick
+                >
+                <b-slider-tick
+                  :value="
+                    'category' in questions[currentQuestion]
+                      ? 0.6 * sliderLimits[questions[currentQuestion].category]
+                      : 0.6
+                  "
+                  >Provavelmente importante</b-slider-tick
+                >
+                <b-slider-tick
+                  :value="
+                    'category' in questions[currentQuestion]
+                      ? 0.8 * sliderLimits[questions[currentQuestion].category]
+                      : 0.8
+                  "
+                  >Quase certamente importante</b-slider-tick
+                >
+                <b-slider-tick
+                  :value="
+                    'category' in questions[currentQuestion]
+                      ? sliderLimits[questions[currentQuestion].category]
+                      : 1
+                  "
+                  >Definitivamente importante</b-slider-tick
+                >
+              </b-slider>
+            </b-field>
+          </div>
+        </template>
+        <template v-else>
+          <b-field>
+            <b-radio-button
+              v-model="questions[currentQuestion].answer"
+              :native-value="true"
+              type="is-success is-light is-outlined"
+            >
+              <b-icon icon="check"></b-icon>
+              <span>Sim</span>
+            </b-radio-button>
+
+            <b-radio-button
+              v-model="questions[currentQuestion].answer"
+              :native-value="false"
+              type="is-danger is-light is-outlined"
+            >
+              <b-icon icon="close"></b-icon>
+              <span>Não</span>
+            </b-radio-button>
           </b-field>
+        </template>
+        <div class="columns mt-5">
+          <div v-if="currentQuestion != 0" class="column is-2">
+            <b-button
+              type="is-primary"
+              expanded
+              @click="currentQuestion = previousQuestion"
+              >Anterior</b-button
+            >
+          </div>
+          <div :class="nextQuestionClass">
+            <b-button
+              type="is-primary"
+              :disabled="!canAdvance"
+              expanded
+              @click="nextQuestion()"
+              >{{ currentQuestion == 15 ? "Concluir" : "Seguinte" }}</b-button
+            >
+          </div>
         </div>
       </template>
       <template v-else>
-        <b-field>
-          <b-radio-button
-            v-model="questions[currentQuestion].answer"
-            :native-value="true"
-            type="is-success is-light is-outlined"
-          >
-            <b-icon icon="check"></b-icon>
-            <span>Sim</span>
-          </b-radio-button>
-
-          <b-radio-button
-            v-model="questions[currentQuestion].answer"
-            :native-value="false"
-            type="is-danger is-light is-outlined"
-          >
-            <b-icon icon="close"></b-icon>
-            <span>Não</span>
-          </b-radio-button>
-        </b-field>
+        <template v-if="isLoadingResults">
+          <div class="columns is-centered">
+            <div class="column is-half">
+              <b-loading :is-full-page="false" :active="true"></b-loading>
+            </div>
+          </div>
+        </template>
+        <template v-else>
+          <p class="is-size-2">
+            Resultados
+            <b-button
+              type="is-primary"
+              class="is-pulled-right"
+              @click="reloadPage()"
+              ><b-icon icon="reload" class="mr-2" />Nova avaliação</b-button
+            >
+          </p>
+          <template v-if="conclusions.length == 0">
+            <div class="columns is-centered">
+              <div class="column is-half">
+                Não foram encontrados resultados relevantes para as respostas
+                dadas.
+              </div>
+            </div>
+          </template>
+          <template v-else>
+            <b-collapse
+              v-for="(conclusion, index) in conclusions"
+              :key="`conclusion-${index}`"
+              :aria-id="`conclusion-${index}`"
+              class="panel"
+              animation="slide"
+              v-model="conclusion.isShowing"
+              @open="getCarsInfo(index)"
+            >
+              <template #trigger>
+                <div
+                  class="panel-heading mb-5"
+                  role="button"
+                  :aria-controls="`conclusion-${index}`"
+                >
+                  {{ conclusion.description }} -
+                  <span :class="getCFColor(conclusion.cf)"
+                    >Certeza: {{ getCFLabel(conclusion.cf) }}</span
+                  >
+                  <small class="ml-5">({{ conclusion.cf.toFixed(2) }})</small>
+                </div>
+              </template>
+              <div class="is-relative">
+                <b-loading
+                  :is-full-page="false"
+                  v-model="conclusion.isLoading"
+                ></b-loading>
+                <div
+                  v-for="(car, indexCar) in conclusion.listCars"
+                  :key="`car-${index}-${indexCar}`"
+                >
+                  <div class="columns">
+                    <div class="column">
+                      <b-image :src="car.imageURL" />
+                    </div>
+                    <div class="column is-size-5">
+                      <div class="mb-2">
+                        <strong>Marca:</strong> {{ car.brand }}
+                      </div>
+                      <div class="mb-2">
+                        <strong>Modelo:</strong> {{ car.model }}
+                      </div>
+                      <div class="mb-2">
+                        <strong>Ano:</strong> {{ car.year }}
+                      </div>
+                      <div class="mb-2">
+                        <strong>Preço Estimado: {{ car.price }}</strong>
+                      </div>
+                    </div>
+                    <div class="column">
+                      <b-button type="is-link" @click="openLink(car.link)"
+                        ><b-icon icon="open-in-new" class="mr-2" /> Mais
+                        Informação</b-button
+                      >
+                    </div>
+                  </div>
+                  <hr />
+                </div>
+              </div>
+            </b-collapse>
+          </template>
+        </template>
       </template>
-      <div class="columns mt-5">
-        <div class="column is-offset-10 is-2">
-          <b-button
-            type="is-primary"
-            :disabled="!canAdvance"
-            expanded
-            @click="nextQuestion()"
-            >Seguinte</b-button
-          >
-        </div>
-      </div>
     </section>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "CarECommerce",
   data() {
@@ -194,22 +309,22 @@ export default {
           evidences: [
             {
               cf: 0.0,
-              description: "Preço é prioritário em relação a consumo e design?",
+              description: "Preco e prioritario em relacao a consumo e design",
               value: "true",
             },
             {
               cf: 1.0,
-              description: "Preço é prioritário em relação a consumo e design?",
+              description: "Preco e prioritario em relacao a consumo e design",
               value: "false",
             },
             {
               cf: 0.0,
-              description: "Consumo é prioritário em relação ao design?",
+              description: "Consumo e prioritario em relacao ao design",
               value: "true",
             },
             {
               cf: 0.0,
-              description: "Consumo é prioritário em relação ao design?",
+              description: "Consumo e prioritario em relacao ao design",
               value: "false",
             },
           ],
@@ -223,12 +338,12 @@ export default {
           evidences: [
             {
               cf: 0.0,
-              description: "Disposto a pagar mais de 10.000€",
+              description: "Disposto a pagar mais de 10.000",
               value: "true",
             },
             {
               cf: 0.0,
-              description: "Disposto a pagar mais de 10.000€",
+              description: "Disposto a pagar mais de 10.000",
               value: "false",
             },
           ],
@@ -243,13 +358,13 @@ export default {
             {
               cf: 0.0,
               description:
-                "Prefere um carro mais antigo ao invés de um com mais kilometragem",
+                "Prefere um carro mais antigo ao inves de um com mais kilometragem",
               value: "true",
             },
             {
               cf: 0.0,
               description:
-                "Prefere um carro mais antigo ao invés de um com mais kilometragem",
+                "Prefere um carro mais antigo ao inves de um com mais kilometragem",
               value: "false",
             },
           ],
@@ -282,12 +397,12 @@ export default {
           evidences: [
             {
               cf: 0.0,
-              description: "O estado do veiculo é relevante",
+              description: "O estado do veiculo e relevante",
               value: "true",
             },
             {
               cf: 0.0,
-              description: "O estado do veiculo é relevante",
+              description: "O estado do veiculo e relevante",
               value: "false",
             },
           ],
@@ -302,13 +417,13 @@ export default {
             {
               cf: 0.0,
               description:
-                "Prefere combustíveis fósseis em vez de um carro elétrico",
+                "Prefere combustiveis fosseis em vez de um carro eletrico",
               value: "true",
             },
             {
               cf: 0.0,
               description:
-                "Prefere combustíveis fósseis em vez de um carro elétrico",
+                "Prefere combustiveis fosseis em vez de um carro eletrico",
               value: "false",
             },
           ],
@@ -331,12 +446,12 @@ export default {
           evidences: [
             {
               cf: 0.0,
-              description: "A média de consumos é relevante",
+              description: "A media de consumos e relevante",
               value: "true",
             },
             {
               cf: 0.0,
-              description: "A média de consumos é relevante",
+              description: "A media de consumos e relevante",
               value: "false",
             },
           ],
@@ -350,12 +465,12 @@ export default {
           evidences: [
             {
               cf: 0.0,
-              description: "O consumo de emissões é um fator relevante",
+              description: "O consumo de emissoes e um fator relevante",
               value: "true",
             },
             {
               cf: 0.0,
-              description: "O consumo de emissões é um fator relevante",
+              description: "O consumo de emissoes e um fator relevante",
               value: "false",
             },
           ],
@@ -369,12 +484,12 @@ export default {
           evidences: [
             {
               cf: 0.0,
-              description: "A performance do veículo é relevante",
+              description: "A performance do veiculo e relevante",
               value: "true",
             },
             {
               cf: 0.0,
-              description: "A performance do veículo é relevante",
+              description: "A performance do veiculo e relevante",
               value: "false",
             },
           ],
@@ -388,12 +503,12 @@ export default {
           evidences: [
             {
               cf: 0.0,
-              description: "Irá realizar mais de 200 quilometros diários",
+              description: "Ira realizar mais de 200 quilometros diarios",
               value: "true",
             },
             {
               cf: 0.0,
-              description: "Irá realizar mais de 200 quilometros diários",
+              description: "Ira realizar mais de 200 quilometros diarios",
               value: "false",
             },
           ],
@@ -407,12 +522,12 @@ export default {
           evidences: [
             {
               cf: 0.0,
-              description: "Quer introduzir modo de piloto automático",
+              description: "Quer introduzir modo de piloto automatico",
               value: "true",
             },
             {
               cf: 0.0,
-              description: "Quer introduzir modo de piloto automático",
+              description: "Quer introduzir modo de piloto automatico",
               value: "false",
             },
           ],
@@ -439,22 +554,22 @@ export default {
           evidences: [
             {
               cf: 0.0,
-              description: "Dá preferência a um carro versátil a um familiar",
+              description: "Da preferencia a um carro versatil a um familiar",
               value: "true",
             },
             {
               cf: 1.0,
-              description: "Dá preferência a um carro versátil a um familiar",
+              description: "Da preferencia a um carro versatil a um familiar",
               value: "false",
             },
             {
               cf: 0.0,
-              description: "Dá preferência a um carro familiar a um desportivo",
+              description: "Da preferencia a um carro familiar a um desportivo",
               value: "true",
             },
             {
               cf: 0.0,
-              description: "Dá preferência a um carro familiar a um desportivo",
+              description: "Da preferencia a um carro familiar a um desportivo",
               value: "false",
             },
           ],
@@ -515,7 +630,7 @@ export default {
           evidences: [
             {
               cf: 0.0,
-              description: "Deseja um desportivo cFAMILIAR_7_LUGARESabrio",
+              description: "Deseja um desportivo cabrio",
               value: "true",
             },
             {
@@ -545,6 +660,7 @@ export default {
           ],
         },
       ],
+      conclusions: [],
     };
   },
   computed: {
@@ -564,6 +680,13 @@ export default {
       }
 
       return false;
+    },
+    nextQuestionClass: function () {
+      if (this.currentQuestion == 0) {
+        return { column: true, "is-offset-10": true, "is-2": true };
+      }
+
+      return { column: true, "is-offset-8": true, "is-2": true };
     },
   },
   methods: {
@@ -659,6 +782,8 @@ export default {
           }
           break;
         case 7: // EMISSOES
+          this.currentQuestion = 8;
+          break;
         case 8: // PERFORMANCE
           this.currentQuestion = 11; // MAIS_200KM
           break;
@@ -699,6 +824,106 @@ export default {
     },
     getResults() {
       this.isLoadingResults = true;
+
+      let evidences = [];
+
+      this.questions.forEach((question) => {
+        evidences = evidences.concat(question.evidences);
+      });
+
+      axios
+        .post("http://localhost:8081/fire-rules", evidences)
+        .then((response) => {
+          this.conclusions = response.data.filter(
+            (conclusion) => conclusion.cf > 0
+          );
+
+          this.conclusions.sort((a, b) => {
+            return b.cf - a.cf;
+          });
+
+          this.conclusions.forEach((conclusion, index) => {
+            conclusion.isLoading = false;
+            if (conclusion.cf > 0.2) {
+              this.getCarsInfo(index);
+              conclusion.isShowing = true;
+              conclusion.hasInfo = true;
+            } else {
+              conclusion.isShowing = false;
+              conclusion.hasInfo = false;
+            }
+          });
+
+          this.isLoadingResults = false;
+        });
+    },
+    getCFLabel(cf) {
+      if (cf <= 0.2) {
+        return "Desconhecido";
+      }
+
+      if (cf <= 0.4) {
+        return "Talvez";
+      }
+
+      if (cf <= 0.6) {
+        return "Provável";
+      }
+
+      if (cf <= 0.8) {
+        return "Quase certamente";
+      }
+
+      return "Certamente";
+    },
+    getCFColor(cf) {
+      if (cf <= 0.2) {
+        return "has-text-dark";
+      }
+
+      if (cf <= 0.4) {
+        return "has-text-danger";
+      }
+
+      if (cf <= 0.6) {
+        return "has-text-warning";
+      }
+
+      if (cf <= 0.8) {
+        return "has-text-success";
+      }
+
+      return "has-text-info";
+    },
+    getCarsInfo(index) {
+      if (this.conclusions[index].hasInfo) {
+        return;
+      }
+
+      this.conclusions[index].isLoading = true;
+
+      const carLinks = this.conclusions[index].listCars.map((car) => car.link);
+
+      axios
+        .post("http://localhost:8081/car-info", carLinks)
+        .then((response) => {
+          response.data.forEach((carInfo, indexCar) => {
+            this.conclusions[index].listCars[indexCar].imageURL =
+              carInfo.imageURL;
+
+            this.conclusions[index].listCars[indexCar].price = carInfo.price;
+          });
+
+          this.conclusions[index].hasInfo = true;
+          this.conclusions[index].isLoading = false;
+          this.$forceUpdate();
+        });
+    },
+    openLink(link) {
+      window.open(link);
+    },
+    reloadPage() {
+      location.reload();
     },
   },
 };

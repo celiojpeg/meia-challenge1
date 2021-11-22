@@ -2,6 +2,7 @@ package org.engcia;
 
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.router.RouterNanoHTTPD;
+import org.engcia.meiaChallenge1Team4.routeHandlers.CarInfoHandler;
 import org.engcia.meiaChallenge1Team4.routeHandlers.FireRulesHandler;
 
 import java.io.IOException;
@@ -25,5 +26,6 @@ public class App extends RouterNanoHTTPD {
     @Override
     public void addMappings() {
         addRoute("/fire-rules", FireRulesHandler.class);
+        addRoute("/car-info", CarInfoHandler.class);
     }
 }
