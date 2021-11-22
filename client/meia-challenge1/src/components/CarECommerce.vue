@@ -700,9 +700,18 @@ export default {
             this.sliderLimits["Consumo"] = Math.abs(
               this.questions[this.currentQuestion].sliders[1].value
             );
+
+            if (this.sliderLimits["Consumo"] == 0) {
+              this.sliderLimits["Consumo"] = 0.1;
+            }
+
             this.sliderLimits["Design"] = Math.abs(
               this.questions[this.currentQuestion].sliders[2].value
             );
+
+            if (this.sliderLimits["Design"] == 0) {
+              this.sliderLimits["Design"] = 0.1;
+            }
           }
 
           if (this.currentQuestion == 11) {
@@ -710,6 +719,10 @@ export default {
             this.sliderLimits["Design"] = Math.abs(
               this.questions[this.currentQuestion].sliders[0].value
             );
+
+            if (this.sliderLimits["Design"] == 0) {
+              this.sliderLimits["Design"] = 0.1;
+            }
           }
         } else if (this.questions[this.currentQuestion].sliders.length == 2) {
           this.processDoubleSlider();
@@ -835,7 +848,7 @@ export default {
         .post("http://localhost:8081/fire-rules", evidences)
         .then((response) => {
           this.conclusions = response.data.filter(
-            (conclusion) => conclusion.cf > 0
+            (conclusion) => conclusion.cf >= 0.1
           );
 
           this.conclusions.sort((a, b) => {
